@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BrushBuddy</title>
-    <link rel="stylesheet" href="site.css" />
+    <link rel="stylesheet" href="site.css?v=4" />
   </head>
   <body class="page">
     <header class="hero">
@@ -16,11 +16,8 @@
         </div>
       </div>
       <div class="hero-actions">
-        <button type="button" class="btn ghost">Preview</button>
-        <label class="switch" aria-hidden="true">
-          <input type="checkbox" checked disabled tabindex="-1" />
-          <span class="track"></span>
-        </label>
+        <span class="btn ghost">Preview</span>
+        <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
       </div>
     </header>
 
@@ -28,42 +25,33 @@
       <h2>Your times</h2>
       <ul class="list">
         <li class="row card">
-          <input class="text-input" value="Morning" readonly aria-readonly="true" />
-          <input class="time-input" type="time" value="07:30" readonly aria-readonly="true" />
-          <label class="switch" aria-hidden="true">
-            <input type="checkbox" checked disabled tabindex="-1" />
-            <span class="track"></span>
-          </label>
-          <button type="button" class="icon-btn" tabindex="-1">×</button>
+          <span class="text-input">Morning</span>
+          <span class="time-input">07:30<span class="clock" aria-hidden="true"></span></span>
+          <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
+          <span class="icon-btn" aria-hidden="true">×</span>
         </li>
         <li class="row card">
-          <input class="text-input" value="Afternoon" readonly aria-readonly="true" />
-          <input class="time-input" type="time" value="13:00" readonly aria-readonly="true" />
-          <label class="switch" aria-hidden="true">
-            <input type="checkbox" disabled tabindex="-1" />
-            <span class="track"></span>
-          </label>
-          <button type="button" class="icon-btn" tabindex="-1">×</button>
+          <span class="text-input">Afternoon</span>
+          <span class="time-input">13:00<span class="clock" aria-hidden="true"></span></span>
+          <span class="switch" aria-hidden="true"><span class="knob"></span></span>
+          <span class="icon-btn" aria-hidden="true">×</span>
         </li>
         <li class="row card">
-          <input class="text-input" value="Night" readonly aria-readonly="true" />
-          <input class="time-input" type="time" value="21:30" readonly aria-readonly="true" />
-          <label class="switch" aria-hidden="true">
-            <input type="checkbox" checked disabled tabindex="-1" />
-            <span class="track"></span>
-          </label>
-          <button type="button" class="icon-btn" tabindex="-1">×</button>
+          <span class="text-input">Night</span>
+          <span class="time-input">21:30<span class="clock" aria-hidden="true"></span></span>
+          <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
+          <span class="icon-btn" aria-hidden="true">×</span>
         </li>
       </ul>
-      <button type="button" class="add" tabindex="-1">Add a time</button>
+      <div class="add">Add a time</div>
     </section>
 
     <section>
       <h2>How it feels</h2>
       <div class="prefs card">
-        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Play alert sound</label>
-        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Notify me if no page is open</label>
-        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Show “Two minutes is enough.”</label>
+        <div class="check"><span class="box" aria-hidden="true"></span> Play alert sound</div>
+        <div class="check"><span class="box" aria-hidden="true"></span> Notify me if no page is open</div>
+        <div class="check"><span class="box" aria-hidden="true"></span> Show “Two minutes is enough.”</div>
       </div>
     </section>
 
