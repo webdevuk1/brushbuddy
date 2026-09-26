@@ -9,54 +9,61 @@
   <body class="page">
     <header class="hero">
       <div class="brand">
-        <img class="hero-buddy" src="assets/icon72.png" alt="BrushBuddy" width="72" height="72" />
+        <img class="hero-buddy" src="assets/hero-buddy.png" alt="" width="72" height="72" />
         <div>
           <h1>BrushBuddy</h1>
-          <p class="lede">Same look as extension settings — your little buddy reminds you to brush on the site you’re on.</p>
-          <span class="pill">Browser extension</span>
+          <p class="lede">Same settings as the toolbar popup — use whichever you prefer.</p>
         </div>
+      </div>
+      <div class="hero-actions">
+        <button type="button" class="btn ghost">Preview</button>
+        <label class="switch" aria-hidden="true">
+          <input type="checkbox" checked disabled tabindex="-1" />
+          <span class="track"></span>
+        </label>
       </div>
     </header>
 
     <section>
       <h2>Your times</h2>
-      <p class="fine" style="margin-top: 0; margin-bottom: 10px">Set these in the toolbar popup or extension options after you install.</p>
       <ul class="list">
         <li class="row card">
-          <span class="label">Morning</span>
-          <span class="time">07:30</span>
-          <span class="toggle-on" aria-hidden="true"></span>
+          <input class="text-input" value="Morning" readonly aria-readonly="true" />
+          <input class="time-input" type="time" value="07:30" readonly aria-readonly="true" />
+          <label class="switch" aria-hidden="true">
+            <input type="checkbox" checked disabled tabindex="-1" />
+            <span class="track"></span>
+          </label>
+          <button type="button" class="icon-btn" tabindex="-1">×</button>
         </li>
         <li class="row card">
-          <span class="label">Afternoon</span>
-          <span class="time">13:00</span>
-          <span class="toggle-off" aria-hidden="true"></span>
+          <input class="text-input" value="Afternoon" readonly aria-readonly="true" />
+          <input class="time-input" type="time" value="13:00" readonly aria-readonly="true" />
+          <label class="switch" aria-hidden="true">
+            <input type="checkbox" disabled tabindex="-1" />
+            <span class="track"></span>
+          </label>
+          <button type="button" class="icon-btn" tabindex="-1">×</button>
         </li>
         <li class="row card">
-          <span class="label">Night</span>
-          <span class="time">21:30</span>
-          <span class="toggle-on" aria-hidden="true"></span>
+          <input class="text-input" value="Night" readonly aria-readonly="true" />
+          <input class="time-input" type="time" value="21:30" readonly aria-readonly="true" />
+          <label class="switch" aria-hidden="true">
+            <input type="checkbox" checked disabled tabindex="-1" />
+            <span class="track"></span>
+          </label>
+          <button type="button" class="icon-btn" tabindex="-1">×</button>
         </li>
       </ul>
-      <div class="add">Add a time — in the extension</div>
+      <button type="button" class="add" tabindex="-1">Add a time</button>
     </section>
 
     <section>
       <h2>How it feels</h2>
       <div class="prefs card">
-        <label class="check"><input type="checkbox" checked disabled /> Play alert sound</label>
-        <label class="check"><input type="checkbox" checked disabled /> Notify me if no page is open</label>
-        <label class="check"><input type="checkbox" checked disabled /> Show “Two minutes is enough.”</label>
-      </div>
-    </section>
-
-    <section>
-      <h2>Get BrushBuddy</h2>
-      <div class="prefs card" style="padding: 14px 16px">
-        <p class="fine" style="margin: 0">
-          Install from the <strong>Chrome Web Store</strong> when your listing is live (link goes here after publish).
-          Until then, use <strong>Load unpacked</strong> from the project folder if you are testing.
-        </p>
+        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Play alert sound</label>
+        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Notify me if no page is open</label>
+        <label class="check"><input type="checkbox" checked disabled tabindex="-1" /> Show “Two minutes is enough.”</label>
       </div>
     </section>
 
@@ -100,23 +107,17 @@
           <span class="product-go">View</span>
         </a>
       </div>
-      <p class="fine">We may earn a commission if you buy through these links, at no extra cost to you.</p>
+      <p id="disclosure" class="fine">We may earn a commission if you buy through these links, at no extra cost to you.</p>
     </section>
 
-    <section>
-      <h2>Legal</h2>
-      <nav class="prefs card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
-        <a href="privacy.html">Privacy Policy</a>
-        <a href="terms.html">Terms of Use</a>
-        <a href="cookies.html">Cookies</a>
-      </nav>
-      <p class="fine">Reminder data stays on your device. We do not run accounts or cloud sync.</p>
-    </section>
+    <p class="fine site-only">
+      Install from the Chrome Web Store when published. This page is a preview of extension settings — change times in the real extension after install.
+      <a href="privacy.html">Privacy</a> · <a href="cookies.html">Cookies</a>
+    </p>
 
     <footer class="footer">
       <span>
         <a href="privacy.html">Privacy</a>
-        ·
         <a href="terms.html">Terms</a>
       </span>
       <span>v0.3.7</span>
