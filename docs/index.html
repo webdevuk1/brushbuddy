@@ -4,111 +4,62 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BrushBuddy</title>
-    <link rel="stylesheet" href="site.css?v=5" />
+    <link rel="stylesheet" href="site.css?v=6" />
   </head>
   <body class="page">
+    <p id="install-banner" class="banner" hidden>
+      Install the <strong>BrushBuddy</strong> extension in Chrome, then reload this page to sync settings with the toolbar popup.
+    </p>
+
     <header class="hero">
       <div class="brand">
-        <img class="hero-buddy" src="assets/hero-buddy.png" alt="" width="72" height="72" />
+        <img id="hero-buddy" class="hero-buddy" src="assets/hero-buddy.png" alt="" width="72" height="72" />
         <div>
           <h1>BrushBuddy</h1>
           <p class="lede">Same settings as the toolbar popup — use whichever you prefer.</p>
         </div>
       </div>
       <div class="hero-actions">
-        <span class="btn ghost">Preview</span>
-        <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
+        <button id="preview" type="button" class="btn ghost">Preview</button>
+        <label class="switch">
+          <input id="enabled" type="checkbox" aria-label="Turn reminders on or off" />
+          <span class="track"></span>
+        </label>
       </div>
     </header>
 
     <section>
       <h2>Your times</h2>
-      <ul class="list">
-        <li class="row card">
-          <span class="text-input">Morning</span>
-          <span class="time-input">07:30<span class="clock" aria-hidden="true"></span></span>
-          <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
-          <span class="icon-btn" aria-hidden="true">×</span>
-        </li>
-        <li class="row card">
-          <span class="text-input">Afternoon</span>
-          <span class="time-input">13:00<span class="clock" aria-hidden="true"></span></span>
-          <span class="switch" aria-hidden="true"><span class="knob"></span></span>
-          <span class="icon-btn" aria-hidden="true">×</span>
-        </li>
-        <li class="row card">
-          <span class="text-input">Night</span>
-          <span class="time-input">21:30<span class="clock" aria-hidden="true"></span></span>
-          <span class="switch on" aria-hidden="true"><span class="knob"></span></span>
-          <span class="icon-btn" aria-hidden="true">×</span>
-        </li>
-      </ul>
-      <div class="add">Add a time</div>
+      <ul id="list" class="list"></ul>
+      <button id="add" type="button" class="add">Add a time</button>
+      <p id="status" class="fine" role="status"></p>
     </section>
 
     <section>
       <h2>How it feels</h2>
       <div class="prefs card">
-        <div class="check"><span class="box" aria-hidden="true"></span> Play alert sound</div>
-        <div class="check"><span class="box" aria-hidden="true"></span> Notify me if no page is open</div>
-        <div class="check"><span class="box" aria-hidden="true"></span> Show “Two minutes is enough.”</div>
+        <label class="check"><input id="sound" type="checkbox" /> Play alert sound</label>
+        <label class="check"><input id="notifications" type="checkbox" /> Notify me if no page is open</label>
+        <label class="check"><input id="motivation" type="checkbox" /> Show “Two minutes is enough.”</label>
       </div>
     </section>
 
-    <section>
+    <section id="recommended">
       <h2>Recommended</h2>
-      <div class="products">
-        <a
-          class="product card"
-          href="https://www.amazon.co.uk/s?k=electric+toothbrush&amp;tag=brushbuddy21-21"
-          rel="noopener noreferrer sponsored"
-          target="_blank"
-        >
-          <span>
-            <span class="product-name">Electric toothbrush</span>
-            <span class="product-detail">Runs a two-minute timer for you.</span>
-          </span>
-          <span class="product-go">View</span>
-        </a>
-        <a
-          class="product card"
-          href="https://www.amazon.co.uk/s?k=fluoride+toothpaste&amp;tag=brushbuddy21-21"
-          rel="noopener noreferrer sponsored"
-          target="_blank"
-        >
-          <span>
-            <span class="product-name">Fluoride toothpaste</span>
-            <span class="product-detail">The one dentists keep recommending.</span>
-          </span>
-          <span class="product-go">View</span>
-        </a>
-        <a
-          class="product card"
-          href="https://www.amazon.co.uk/s?k=dental+floss&amp;tag=brushbuddy21-21"
-          rel="noopener noreferrer sponsored"
-          target="_blank"
-        >
-          <span>
-            <span class="product-name">Dental floss</span>
-            <span class="product-detail">The minute after you brush.</span>
-          </span>
-          <span class="product-go">View</span>
-        </a>
-      </div>
-      <p id="disclosure" class="fine">We may earn a commission if you buy through these links, at no extra cost to you.</p>
+      <div id="products" class="products"></div>
+      <p id="disclosure" class="fine"></p>
     </section>
-
-    <p class="fine site-only">
-      Install from the Chrome Web Store when published. This page is a preview of extension settings — change times in the real extension after install.
-      <a href="privacy.html">Privacy</a> · <a href="cookies.html">Cookies</a>
-    </p>
 
     <footer class="footer">
       <span>
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </span>
-      <span>v0.3.7</span>
+      <span>v0.3.8</span>
     </footer>
+
+    <script src="js/site-api.js"></script>
+    <script src="js/reminders-editor.js"></script>
+    <script src="js/site-app.js"></script>
   </body>
 </html>
