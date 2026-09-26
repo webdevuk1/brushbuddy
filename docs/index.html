@@ -4,16 +4,122 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BrushBuddy</title>
-    <link rel="stylesheet" href="legal/legal.css" />
+    <link rel="stylesheet" href="site.css" />
   </head>
-  <body>
-    <h1>BrushBuddy</h1>
-    <p>A friendly browser reminder to brush your teeth.</p>
-    <nav class="nav">
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Use</a>
-      <a href="cookies.html">Cookies</a>
-    </nav>
-    <p class="fine">Install from the Chrome Web Store (link your listing here after publish).</p>
+  <body class="page">
+    <header class="hero">
+      <div class="brand">
+        <img class="hero-buddy" src="assets/icon72.png" alt="BrushBuddy" width="72" height="72" />
+        <div>
+          <h1>BrushBuddy</h1>
+          <p class="lede">Same look as extension settings — your little buddy reminds you to brush on the site you’re on.</p>
+          <span class="pill">Browser extension</span>
+        </div>
+      </div>
+    </header>
+
+    <section>
+      <h2>Your times</h2>
+      <p class="fine" style="margin-top: 0; margin-bottom: 10px">Set these in the toolbar popup or extension options after you install.</p>
+      <ul class="list">
+        <li class="row card">
+          <span class="label">Morning</span>
+          <span class="time">07:30</span>
+          <span class="toggle-on" aria-hidden="true"></span>
+        </li>
+        <li class="row card">
+          <span class="label">Afternoon</span>
+          <span class="time">13:00</span>
+          <span class="toggle-off" aria-hidden="true"></span>
+        </li>
+        <li class="row card">
+          <span class="label">Night</span>
+          <span class="time">21:30</span>
+          <span class="toggle-on" aria-hidden="true"></span>
+        </li>
+      </ul>
+      <div class="add">Add a time — in the extension</div>
+    </section>
+
+    <section>
+      <h2>How it feels</h2>
+      <div class="prefs card">
+        <label class="check"><input type="checkbox" checked disabled /> Play alert sound</label>
+        <label class="check"><input type="checkbox" checked disabled /> Notify me if no page is open</label>
+        <label class="check"><input type="checkbox" checked disabled /> Show “Two minutes is enough.”</label>
+      </div>
+    </section>
+
+    <section>
+      <h2>Get BrushBuddy</h2>
+      <div class="prefs card" style="padding: 14px 16px">
+        <p class="fine" style="margin: 0">
+          Install from the <strong>Chrome Web Store</strong> when your listing is live (link goes here after publish).
+          Until then, use <strong>Load unpacked</strong> from the project folder if you are testing.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Recommended</h2>
+      <div class="products">
+        <a
+          class="product card"
+          href="https://www.amazon.co.uk/s?k=electric+toothbrush&amp;tag=brushbuddy21-21"
+          rel="noopener noreferrer sponsored"
+          target="_blank"
+        >
+          <span>
+            <span class="product-name">Electric toothbrush</span>
+            <span class="product-detail">Runs a two-minute timer for you.</span>
+          </span>
+          <span class="product-go">View</span>
+        </a>
+        <a
+          class="product card"
+          href="https://www.amazon.co.uk/s?k=fluoride+toothpaste&amp;tag=brushbuddy21-21"
+          rel="noopener noreferrer sponsored"
+          target="_blank"
+        >
+          <span>
+            <span class="product-name">Fluoride toothpaste</span>
+            <span class="product-detail">The one dentists keep recommending.</span>
+          </span>
+          <span class="product-go">View</span>
+        </a>
+        <a
+          class="product card"
+          href="https://www.amazon.co.uk/s?k=dental+floss&amp;tag=brushbuddy21-21"
+          rel="noopener noreferrer sponsored"
+          target="_blank"
+        >
+          <span>
+            <span class="product-name">Dental floss</span>
+            <span class="product-detail">The minute after you brush.</span>
+          </span>
+          <span class="product-go">View</span>
+        </a>
+      </div>
+      <p class="fine">We may earn a commission if you buy through these links, at no extra cost to you.</p>
+    </section>
+
+    <section>
+      <h2>Legal</h2>
+      <nav class="prefs card" style="padding: 14px 16px; display: flex; flex-direction: column; gap: 10px">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+        <a href="cookies.html">Cookies</a>
+      </nav>
+      <p class="fine">Reminder data stays on your device. We do not run accounts or cloud sync.</p>
+    </section>
+
+    <footer class="footer">
+      <span>
+        <a href="privacy.html">Privacy</a>
+        ·
+        <a href="terms.html">Terms</a>
+      </span>
+      <span>v0.3.7</span>
+    </footer>
   </body>
 </html>

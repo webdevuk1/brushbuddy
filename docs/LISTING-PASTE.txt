@@ -1,0 +1,62 @@
+=== BrushBuddy — paste into Chrome Web Store ===
+
+ZIP TO UPLOAD:
+D:\cursor ai\BrushPill\dist\BrushBuddy-store.zip
+
+SCREENSHOTS (1280×800):
+D:\cursor ai\BrushPill\store\reminder.png
+D:\cursor ai\BrushPill\store\settings.png
+
+PRIVACY POLICY URL:
+https://webdevuk1.github.io/brushbuddy/privacy.html
+
+OFFICIAL WEBSITE (optional):
+https://webdevuk1.github.io/brushbuddy/
+
+CONTACT EMAIL:
+[YOUR EMAIL — same one you can answer within a few days]
+
+--- Store listing ---
+
+Name:
+BrushBuddy
+
+Short description (132 chars max):
+Your little buddy pops up when it's time to brush your teeth.
+
+Detailed description:
+BrushBuddy reminds you to brush at the times you choose. Open the toolbar popup to set morning, night, or custom times, turn sound and notifications on or off, and preview your buddy.
+
+When a reminder is due, your buddy appears on the website tab you already have open. Tap Done when you've brushed, Snooze for 10 minutes, or dismiss him. If no normal website tab is available, an optional system notification can alert you instead.
+
+Everything stays on your device in Chrome storage. No account, no cloud sync, and no data sent to the developer.
+
+Category: Productivity (or Health & Fitness)
+
+Language: English
+
+--- Single purpose description ---
+
+Remind the user to brush their teeth at scheduled times by showing an on-page buddy or a system notification.
+
+--- Host permission justification ---
+
+BrushBuddy only injects its own buddy UI on http/https tabs when a reminder the user scheduled is active. It does not read, collect, or transmit page content. Host access is required to draw the reminder on the site the user is already viewing.
+
+--- Data safety (honest defaults for this build) ---
+
+Developer collects user data: No (nothing transmitted to developer servers)
+
+All reminder settings and state are stored locally via chrome.storage on the user's device.
+
+Not sold to third parties: No
+Not used for advertising: No
+No developer backend / no encryption claim needed for data you don't receive
+
+User can delete data by uninstalling the extension or clearing extension data in browser settings.
+
+--- Reviewer notes (optional) ---
+
+To test: load extension, open any https:// page, click the toolbar icon → Preview buddy. The on-page character should appear with Done/Snooze.
+
+Dashboard: https://chrome.google.com/webstore/devconsole
