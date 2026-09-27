@@ -10,7 +10,7 @@ A Chrome / Brave reminder to brush your teeth. Your buddy pops up on the site yo
 4. **Full settings tab** — `brave://extensions` → BrushBuddy → **Details** → **Extension options** (same settings as the popup, bigger layout).
 5. **Legal** — Privacy + Terms linked from the popup; host `privacy.html`, `terms.html`, `cookies.html`, and `legal/` publicly for the store (see `docs/LEGAL-COMPLIANCE.md`).
 
-**Sound:** Turn on **Play alert sound** in the popup. **Preview buddy** always plays the alert so you can hear it. Real alarms use the same sound when that box is checked. Replace the built-in chime by adding `assets/sounds/alert.mp3` (see that folder’s README).
+**Sound:** Pick your alert chime in the popup. **Preview buddy** plays it so you can hear it. Real alarms use the same sound. Replace the built-in chime by adding `assets/sounds/alert.mp3` (see that folder’s README).
 
 **Not a separate website** — Everything runs inside the extension except the privacy page you host for the store.
 

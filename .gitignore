@@ -2,3 +2,4 @@
 *.log
 profile-smoke/
 dist/
+node_modules/

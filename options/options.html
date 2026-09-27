@@ -13,7 +13,7 @@
         <img id="hero-buddy" class="hero-buddy" alt="" width="72" height="72" />
         <div>
           <h1>BrushBuddy</h1>
-          <p class="lede">Same settings as the toolbar popup — use whichever you prefer.</p>
+          <p class="lede">Friendly brush reminders on your open tabs — your buddy, a chime, and a quick nudge when it’s time.</p>
         </div>
       </div>
       <div class="hero-actions">
@@ -33,17 +33,13 @@
     </section>
 
     <section>
-      <h2>How it feels</h2>
+      <h2>Alert sound</h2>
       <div class="prefs card">
-        <div class="sound-pref">
-          <label class="check sound-check"><input id="sound" type="checkbox" /> Play alert sound</label>
-          <div class="sound-tools">
-            <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
-            <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
-          </div>
+        <p class="sound-hint">Plays when a reminder pops up. Your buddy and notifications stay on.</p>
+        <div class="sound-tools">
+          <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
+          <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
         </div>
-        <label class="check"><input id="notifications" type="checkbox" /> Notify me if no page is open</label>
-        <label class="check"><input id="motivation" type="checkbox" /> Show “Two minutes is enough.”</label>
       </div>
     </section>
 
@@ -64,6 +60,7 @@
     <script src="../lib/alert-sound.js"></script>
     <script src="../lib/characters.js"></script>
     <script src="../lib/time.js"></script>
+    <script src="../lib/confirm.js"></script>
     <script src="../lib/reminders-editor.js"></script>
     <script src="../lib/affiliates.js"></script>
     <script src="options.js"></script>

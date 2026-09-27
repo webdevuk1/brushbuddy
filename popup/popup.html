@@ -12,7 +12,7 @@
         <img class="logo-img" alt="" width="36" height="36" />
         <div>
           <h1>BrushBuddy</h1>
-          <p class="muted">Your brush buddy</p>
+          <p class="muted">Pops up when it’s time to brush — on whatever site you’re on.</p>
         </div>
       </div>
       <label class="switch">
@@ -38,16 +38,12 @@
     </section>
 
     <section class="panel card prefs">
-      <p class="panel-title">How it feels</p>
-      <div class="sound-pref">
-        <label class="check sound-check"><input id="sound" type="checkbox" /> Play alert sound</label>
-        <div class="sound-tools">
-          <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
-          <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
-        </div>
+      <p class="panel-title">Alert sound</p>
+      <p class="sound-hint">Plays when a reminder pops up. Buddy and notifications stay on.</p>
+      <div class="sound-tools">
+        <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
+        <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
       </div>
-      <label class="check"><input id="notifications" type="checkbox" /> Notify if no page is open</label>
-      <label class="check"><input id="motivation" type="checkbox" /> Show “Two minutes is enough.”</label>
     </section>
 
     <section class="actions card">
@@ -73,6 +69,7 @@
     <script src="../lib/sound-tones.js"></script>
     <script src="../lib/alert-sound.js"></script>
     <script src="../lib/time.js"></script>
+    <script src="../lib/confirm.js"></script>
     <script src="../lib/reminders-editor.js"></script>
     <script src="popup.js"></script>
   </body>

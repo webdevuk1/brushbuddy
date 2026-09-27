@@ -1,0 +1,11 @@
+{
+  "name": "brushbuddy",
+  "private": true,
+  "scripts": {
+    "dev": "serve docs -l 3000",
+    "smoke": "node scripts/smoke.mjs"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  }
+}

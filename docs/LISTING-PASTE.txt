@@ -60,3 +60,6 @@ User can delete data by uninstalling the extension or clearing extension data in
 To test: load extension, open any https:// page, click the toolbar icon → Preview buddy. The on-page character should appear with Done/Snooze.
 
 Dashboard: https://chrome.google.com/webstore/devconsole
+
+--- After you publish (add to site-urls.js chromeStoreInstall) ---
+Chrome install link: https://chromewebstore.google.com/detail/REPLACE_WITH_EXTENSION_ID

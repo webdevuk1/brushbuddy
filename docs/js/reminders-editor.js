@@ -13,14 +13,12 @@
   function wire(config) {
     const list = config.list;
     const addButton = config.addButton;
-    const sound = config.sound;
     const soundTone = config.soundTone;
     const soundPlay = config.soundPlay;
-    const notifications = config.notifications;
-    const motivation = config.motivation;
     const enabled = config.enabled;
     const status = config.status;
     const compact = Boolean(config.compact);
+    const useConfirm = config.confirmBeforeDisable !== false && root.BrushConfirm;
 
     let reminders = [];
     let timer = 0;
@@ -59,8 +57,23 @@
       });
     }
 
-    if (enabled) enabled.addEventListener("change", scheduleSave);
-    sound.addEventListener("change", scheduleSave);
+    async function confirmTurnOff() {
+      if (!useConfirm) return true;
+      return root.BrushConfirm.ask();
+    }
+
+    if (enabled) {
+      enabled.addEventListener("change", async () => {
+        if (!enabled.checked) {
+          const ok = await confirmTurnOff();
+          if (!ok) {
+            enabled.checked = true;
+            return;
+          }
+        }
+        scheduleSave();
+      });
+    }
     if (soundTone && root.BrushSoundTones) {
       soundTone.replaceChildren();
       BrushSoundTones.options().forEach((opt) => {
@@ -78,21 +91,15 @@
         if (root.BrushSoundTones) BrushSoundTones.preview(id);
       });
     }
-    notifications.addEventListener("change", scheduleSave);
-    motivation.addEventListener("change", scheduleSave);
-
     function load(state, source) {
       if (source === "remote" && Date.now() < ignoreRemoteLoadUntil) return;
       reminders = state.reminders.map((item) => Object.assign({}, item));
       if (enabled) enabled.checked = state.enabled;
-      sound.checked = state.prefs.sound;
       if (soundTone) {
         soundTone.value = root.BrushSoundTones
           ? BrushSoundTones.sanitize(state.prefs.soundId)
           : state.prefs.soundId || "classic";
       }
-      notifications.checked = state.prefs.notifications;
-      motivation.checked = state.prefs.showMotivationLine;
       render();
     }
 
@@ -102,7 +109,7 @@
       if (res && res.state) load(res.state, "remote");
     }
 
-    function onEdit(event) {
+    async function onEdit(event) {
       const row = event.target.closest("[data-id]");
       if (!row) return;
       const item = reminders.find((reminder) => reminder.id === row.dataset.id);
@@ -114,7 +121,16 @@
         item.hour = Number(match[1]);
         item.minute = Number(match[2]);
       }
-      if (event.target.classList.contains("on")) item.enabled = event.target.checked;
+      if (event.target.classList.contains("on")) {
+        if (!event.target.checked) {
+          const ok = await confirmTurnOff();
+          if (!ok) {
+            event.target.checked = true;
+            return;
+          }
+        }
+        item.enabled = event.target.checked;
+      }
       scheduleSave();
     }
 
@@ -188,10 +204,10 @@
         enabled: enabled ? enabled.checked : true,
         reminders: payload,
         prefs: {
-          sound: sound.checked,
+          sound: true,
           soundId: soundTone ? soundTone.value : "classic",
-          notifications: notifications.checked,
-          showMotivationLine: motivation.checked,
+          notifications: true,
+          showMotivationLine: true,
         },
       });
       if (!res || !res.ok) {
@@ -200,7 +216,7 @@
         return;
       }
       if (res.state) load(res.state, "save");
-      if (status) status.textContent = "Saved";
+      if (status && config.showSaveStatus) status.textContent = "Saved";
     }
 
     return { load, loadFromRemote, scheduleSave };
