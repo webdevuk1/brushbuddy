@@ -23,6 +23,7 @@
     let reminders = [];
     let timer = 0;
     let saveChain = Promise.resolve();
+    let ignoreRemoteLoadUntil = 0;
 
     list.addEventListener("input", onEdit);
     list.addEventListener("change", onEdit);
@@ -61,13 +62,20 @@
     notifications.addEventListener("change", scheduleSave);
     motivation.addEventListener("change", scheduleSave);
 
-    function load(state) {
+    function load(state, source) {
+      if (source === "remote" && Date.now() < ignoreRemoteLoadUntil) return;
       reminders = state.reminders.map((item) => Object.assign({}, item));
       if (enabled) enabled.checked = state.enabled;
       sound.checked = state.prefs.sound;
       notifications.checked = state.prefs.notifications;
       motivation.checked = state.prefs.showMotivationLine;
       render();
+    }
+
+    async function loadFromRemote() {
+      if (Date.now() < ignoreRemoteLoadUntil) return;
+      const res = await send("GET_STATE");
+      if (res && res.state) load(res.state, "remote");
     }
 
     function onEdit(event) {
@@ -144,6 +152,7 @@
     }
 
     async function persist() {
+      ignoreRemoteLoadUntil = Date.now() + 900;
       const payload = reminders.map((item) => ({
         id: item.id,
         hour: item.hour,
@@ -161,13 +170,15 @@
         },
       });
       if (!res || !res.ok) {
+        ignoreRemoteLoadUntil = 0;
         if (status) status.textContent = "Couldn’t save. Try again.";
         return;
       }
+      if (res.state) load(res.state, "save");
       if (status) status.textContent = "Saved";
     }
 
-    return { load, scheduleSave };
+    return { load, loadFromRemote, scheduleSave };
   }
 
   root.BrushRemindersEditor = { wire };

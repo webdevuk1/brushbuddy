@@ -61,13 +61,13 @@
     else status.textContent = "Open a normal website tab, then preview again.";
   });
 
-  async function pullState() {
-    const res = await BrushSite.sendMessage({ type: "GET_STATE" });
-    if (res && res.state) editor.load(res.state);
-  }
+  let remoteSyncTimer = 0;
 
   document.addEventListener("brushbuddy-storage-changed", () => {
-    pullState().catch(() => {});
+    clearTimeout(remoteSyncTimer);
+    remoteSyncTimer = setTimeout(() => {
+      editor.loadFromRemote().catch(() => {});
+    }, 80);
   });
 
   BrushSite.waitForExtension(5000).then((ok) => {
@@ -77,7 +77,7 @@
       return;
     }
     banner.hidden = true;
-    pullState().catch(() => {
+    editor.loadFromRemote().catch(() => {
       status.textContent = "Couldn’t load settings.";
     });
   });
