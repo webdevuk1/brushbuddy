@@ -44,6 +44,22 @@
     let saveChain = Promise.resolve();
     let ignoreRemoteLoadUntil = 0;
 
+    function sendExtensionMessage(message) {
+      if (root.BrushSite && typeof root.BrushSite.sendMessage === "function") {
+        return root.BrushSite.sendMessage(message);
+      }
+      return chrome.runtime.sendMessage(message);
+    }
+
+    async function loadFromRemote() {
+      const res = await sendExtensionMessage({ type: "GET_STATE" });
+      if (res && res.ok && res.state) {
+        load(res.state, "remote");
+        return true;
+      }
+      return false;
+    }
+
     list.addEventListener("input", (event) => {
       if (event.target.classList.contains("label")) onEdit(event);
     });
@@ -300,7 +316,7 @@
         reminders: payload,
         prefs: buildPrefs(),
       };
-      const res = await chrome.runtime.sendMessage(message);
+      const res = await sendExtensionMessage(message);
       if (!res || !res.ok) {
         ignoreRemoteLoadUntil = 0;
         if (status) status.textContent = "Couldn’t save. Try again.";
@@ -310,7 +326,7 @@
       if (status && config.showSaveStatus) status.textContent = "Saved";
     }
 
-    return { load, scheduleSave, render };
+    return { load, scheduleSave, render, loadFromRemote };
   }
 
   root.BrushRemindersEditor = { wire };

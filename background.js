@@ -92,7 +92,10 @@ const TRUSTED_SITE_PREFIXES = [
 ];
 
 function senderPageUrl(sender) {
-  return String((sender && (sender.url || (sender.tab && sender.tab.url))) || "");
+  if (!sender) return "";
+  const tabUrl = sender.tab && sender.tab.url ? String(sender.tab.url) : "";
+  if (tabUrl.startsWith("http://") || tabUrl.startsWith("https://")) return tabUrl;
+  return String(sender.url || "");
 }
 
 function isOurExtension(sender) {
