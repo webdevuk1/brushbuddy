@@ -1,4 +1,13 @@
 {
   "buildCommand": "",
-  "outputDirectory": "docs"
+  "outputDirectory": "docs",
+  "headers": [
+    {
+      "source": "/admin/(.*)",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" },
+        { "key": "Referrer-Policy", "value": "same-origin" }
+      ]
+    }
+  ]
 }

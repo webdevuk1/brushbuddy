@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>BrushBuddy — Go live</title>
+    <link rel="stylesheet" href="../site.css?v=6" />
+    <link rel="stylesheet" href="admin.css?v=1" />
+  </head>
+  <body class="page admin-page">
+    <div id="setup-shell" hidden>
+      <div class="admin-login">
+        <div class="admin-login__card">
+          <p class="admin-login__eyebrow">BrushBuddy</p>
+          <h1 class="admin-login__title">Admin locked</h1>
+          <p class="admin-login__sub">
+            Set these in Vercel → Settings → Environment Variables (Production), then redeploy:
+          </p>
+          <ul class="admin-login__setup-list">
+            <li><code>ADMIN_USERNAME</code></li>
+            <li><code>ADMIN_PASSWORD</code></li>
+          </ul>
+          <p class="admin-login__sub">
+            Use a strong password. Names must match exactly. This page is not linked from the public site.
+          </p>
+          <p class="admin-fine"><a href="../index.html">← Back to BrushBuddy</a></p>
+        </div>
+      </div>
+    </div>
+
+    <div id="login-shell" hidden>
+      <div class="admin-login">
+        <div class="admin-login__card">
+          <p class="admin-login__eyebrow">BrushBuddy</p>
+          <h1 class="admin-login__title">Go live</h1>
+          <p class="admin-login__sub">Sign in to view and tick off the security and launch checklist.</p>
+          <form id="login-form" class="admin-login__form">
+            <label for="login-username">Username</label>
+            <input id="login-username" name="username" autocomplete="username" required />
+
+            <label for="login-password">Password</label>
+            <input
+              id="login-password"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+
+            <p id="login-error" class="admin-login__error" role="alert"></p>
+            <button type="submit" class="admin-login__submit">Sign in</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div id="app-shell" hidden>
+      <header class="admin-top">
+        <div>
+          <p class="admin-login__eyebrow">BrushBuddy</p>
+          <h1>Go live</h1>
+          <p class="lede">Security, legal, and release checks before you go public.</p>
+        </div>
+        <div class="admin-top__actions">
+          <button id="reset-checks" type="button" class="btn ghost">Reset ticks</button>
+          <button id="logout" type="button" class="btn ghost">Sign out</button>
+        </div>
+      </header>
+
+      <div class="progress-wrap">
+        <div class="progress-track" aria-hidden="true">
+          <div id="progress-bar" class="progress-fill"></div>
+        </div>
+        <p id="progress-text" class="progress-label">Loading…</p>
+      </div>
+
+      <div id="ready-banner" class="ready-banner" hidden>
+        <strong>All boxes ticked.</strong> You have walked through every item — only flip the store to Public when you are happy.
+      </div>
+
+      <div id="checklist"></div>
+
+      <p class="admin-fine">
+        Progress is saved in this browser only. <a href="../index.html">Public site</a>
+      </p>
+    </div>
+
+    <script src="../js/admin-auth.js"></script>
+    <script src="../js/go-live-checklist.js"></script>
+    <script src="../js/go-live-app.js"></script>
+  </body>
+</html>

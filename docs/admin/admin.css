@@ -1,0 +1,203 @@
+body.admin-page {
+  max-width: 720px;
+}
+
+.admin-login {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+
+.admin-login__card {
+  width: 100%;
+  max-width: 400px;
+  padding: 28px 22px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--card);
+}
+
+.admin-login__eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mint);
+  font-weight: 600;
+}
+
+.admin-login__title {
+  margin: 0 0 10px;
+  font-size: 26px;
+  letter-spacing: -0.03em;
+}
+
+.admin-login__sub {
+  margin: 0 0 20px;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-login__form label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.admin-login__form input {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.admin-login__submit {
+  margin-top: 12px;
+  padding: 11px 16px;
+  border-radius: 10px;
+  border: none;
+  background: var(--mint);
+  color: var(--mint-ink);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-login__error {
+  margin: 0;
+  font-size: 13px;
+  color: #fca5a5;
+}
+
+.admin-login__setup-list {
+  margin: 0 0 16px;
+  padding-left: 1.25rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.admin-login__setup-list code {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.admin-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.admin-top__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn.ghost {
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.btn.ghost:hover {
+  border-color: rgba(110, 231, 183, 0.45);
+}
+
+.progress-wrap {
+  margin-bottom: 24px;
+}
+
+.progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #34d399, var(--mint));
+  transition: width 0.25s ease;
+}
+
+.progress-label {
+  margin: 8px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.ready-banner {
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(110, 231, 183, 0.5);
+  background: rgba(110, 231, 183, 0.12);
+  font-size: 14px;
+}
+
+.go-live-section {
+  margin-bottom: 28px;
+}
+
+.go-live-section h2 {
+  font-size: 15px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.go-live-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.go-live-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.go-live-item input {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--mint);
+  flex-shrink: 0;
+}
+
+.go-live-item:has(input:checked) {
+  border-color: rgba(110, 231, 183, 0.35);
+}
+
+.admin-fine {
+  margin-top: 32px;
+  font-size: 12px;
+  color: var(--muted);
+}
