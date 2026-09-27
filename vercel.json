@@ -1,6 +1,11 @@
 {
   "buildCommand": "",
   "outputDirectory": "docs",
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/admin/go-live", "destination": "/admin/go-live.html" },
+    { "source": "/admin", "destination": "/admin/go-live.html" }
+  ],
   "headers": [
     {
       "source": "/admin/(.*)",

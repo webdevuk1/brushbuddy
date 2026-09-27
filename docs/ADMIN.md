@@ -1,6 +1,6 @@
 # BrushBuddy admin (go-live checklist)
 
-Private checklist at **`/admin/go-live.html`** on your Vercel site (not linked from the public homepage).
+Private checklist at **`/admin/go-live`** (or `/admin/go-live.html`) on your Vercel site (not linked from the public homepage).
 
 ## Login (same pattern as Matty’s BBQ)
 
