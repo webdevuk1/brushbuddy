@@ -35,7 +35,8 @@
   });
 
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") scheduleMaybeShow();
+    if (document.visibilityState !== "visible") stopAlarm();
+    else scheduleMaybeShow();
   });
   window.addEventListener("pageshow", () => scheduleMaybeShow());
   window.addEventListener("resize", () => {
@@ -56,7 +57,7 @@
         return;
       }
       renderBuddy(res.pending, {
-        chime: false,
+        chime: shouldChime(res.pending, res.sound),
         showMotivationLine: res.showMotivationLine !== false,
         buddyPosition: res.buddyPosition || res.pillPosition || null,
       });
@@ -67,14 +68,19 @@
 
   function renderBuddy(pending, opts) {
     if (!pending || typeof pending.id !== "string") return false;
-    if (host && currentId === pending.id) return true;
+    if (host && currentId === pending.id) {
+      if (opts.chime && globalThis.BrushAlertSound) BrushAlertSound.startLoop();
+      return true;
+    }
     currentId = pending.id;
     currentPos = opts.buddyPosition || null;
     host?.remove();
     host = buildBuddy(pending, opts.showMotivationLine);
     document.documentElement.appendChild(host);
     requestAnimationFrame(() => applyPosition(currentPos));
-    if (opts.chime) armAlertSound(host);
+    if (opts.chime && globalThis.BrushAlertSound && document.visibilityState === "visible") {
+      BrushAlertSound.startLoop();
+    }
     return true;
   }
 
@@ -83,18 +89,12 @@
     return Boolean(soundPref);
   }
 
-  function armAlertSound(el) {
-    let played = false;
-    function tryPlay() {
-      if (played || !globalThis.BrushAlertSound) return;
-      played = true;
-      el.removeEventListener("pointerdown", tryPlay, true);
-      BrushAlertSound.play();
-    }
-    el.addEventListener("pointerdown", tryPlay, true);
+  function stopAlarm() {
+    if (globalThis.BrushAlertSound) BrushAlertSound.stop();
   }
 
   function hideBuddy() {
+    stopAlarm();
     currentId = null;
     host?.remove();
     host = null;

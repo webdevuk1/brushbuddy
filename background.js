@@ -3,6 +3,8 @@ importScripts("lib/time.js", "lib/storage.js");
 const ALARM_PREFIX = "brush:";
 const SNOOZE_PREFIX = "snooze:";
 const SNOOZE_MS = 10 * 60 * 1000;
+const NUDGE_PREFIX = "nudge:";
+const NUDGE_MS = 60 * 1000;
 const PENDING_TTL_MS = 45 * 60 * 1000;
 const PREVIEW_TTL_MS = 10 * 60 * 1000;
 
@@ -163,6 +165,7 @@ async function freshPending(state) {
   });
   rememberState(updated);
   await chrome.notifications.clear(staleId);
+  await clearPendingNudge(staleId);
   return null;
 }
 
@@ -252,6 +255,7 @@ async function saveFromUi(message) {
   });
   await reschedule(state);
   if (!state.enabled) {
+    if (state.pending && state.pending.id) await clearPendingNudge(state.pending.id);
     setReminder(false);
     await clearSnoozes();
     const previous = await chrome.notifications.getAll();
@@ -288,8 +292,20 @@ function pendingPayload(state, pending) {
 
 async function onAlarm(alarm) {
   if (!alarm || typeof alarm.name !== "string") return;
+  const nudge = alarm.name.startsWith(NUDGE_PREFIX);
   const snooze = alarm.name.startsWith(SNOOZE_PREFIX);
   const daily = alarm.name.startsWith(ALARM_PREFIX);
+  if (nudge) {
+    const pendingId = alarm.name.slice(NUDGE_PREFIX.length);
+    const state = await readState();
+    if (!state.enabled || !state.pending || state.pending.id !== pendingId || state.pending.preview) {
+      await chrome.alarms.clear(alarm.name);
+      return;
+    }
+    await deliver(state.pending);
+    await armPendingNudge(pendingId);
+    return;
+  }
   if (!snooze && !daily) return;
 
   const state = await readState();
@@ -328,7 +344,21 @@ async function present(label, reminderId, preview) {
   });
   rememberState(state);
   setReminder(true);
-  return deliver(pending);
+  const result = await deliver(pending);
+  if (!preview) await armPendingNudge(pending.id);
+  return result;
+}
+
+async function armPendingNudge(pendingId) {
+  if (!pendingId) return;
+  const name = NUDGE_PREFIX + pendingId;
+  await chrome.alarms.clear(name);
+  await chrome.alarms.create(name, { when: Date.now() + NUDGE_MS });
+}
+
+async function clearPendingNudge(pendingId) {
+  if (!pendingId) return;
+  await chrome.alarms.clear(NUDGE_PREFIX + pendingId);
 }
 
 async function deliver(pending) {
@@ -432,6 +462,7 @@ async function onPillAction(action, pendingId) {
   if (pendingId && pendingId !== pending.id) return { ok: false };
 
   await chrome.notifications.clear(pending.id);
+  await clearPendingNudge(pending.id);
   const next = await BrushStorage.update((current) => {
     if (!current.pending || current.pending.id !== pending.id) return;
     if (action === "done") current.lastDoneAt = Date.now();
