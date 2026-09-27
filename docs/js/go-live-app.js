@@ -1,7 +1,7 @@
 (function () {
   "use strict";
 
-  const STORAGE_KEY = "brushbuddy-go-live-checks-v2";
+  const STORAGE_KEY = "brushbuddy-go-live-checks-v3";
 
   const loginShell = document.getElementById("login-shell");
   const appShell = document.getElementById("app-shell");

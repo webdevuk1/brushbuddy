@@ -1,6 +1,13 @@
 (function () {
   "use strict";
 
+  if (globalThis.BrushSiteUrls) {
+    const foot = document.querySelector("footer.footer");
+    const links = foot ? foot.querySelectorAll("a") : [];
+    if (links[0]) links[0].href = BrushSiteUrls.privacy;
+    if (links[1]) links[1].href = BrushSiteUrls.terms;
+  }
+
   const status = document.getElementById("status");
   const products = document.getElementById("products");
   const disclosure = document.getElementById("disclosure");

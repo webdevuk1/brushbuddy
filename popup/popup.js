@@ -43,6 +43,12 @@
     if (area === "local" && changes.state) applyLocalState(changes.state.newValue);
   });
 
+  if (globalThis.BrushSiteUrls) {
+    const links = document.querySelector("footer.foot")?.querySelectorAll("a") || [];
+    if (links[0]) links[0].href = BrushSiteUrls.privacy;
+    if (links[1]) links[1].href = BrushSiteUrls.terms;
+  }
+
   document.querySelector(".logo-img").src = BrushCharacters.mark;
   document.getElementById("version").textContent = "v" + chrome.runtime.getManifest().version;
 

@@ -8,10 +8,10 @@ D:\cursor ai\BrushPill\store\reminder.png
 D:\cursor ai\BrushPill\store\settings.png
 
 PRIVACY POLICY URL:
-https://webdevuk1.github.io/brushbuddy/privacy.html
+https://brushbuddy-roan.vercel.app/privacy.html
 
 OFFICIAL WEBSITE (optional):
-https://webdevuk1.github.io/brushbuddy/
+https://brushbuddy-roan.vercel.app/
 
 CONTACT EMAIL:
 [YOUR EMAIL — same one you can answer within a few days]

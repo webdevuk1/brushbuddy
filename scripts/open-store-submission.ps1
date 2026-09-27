@@ -7,5 +7,5 @@ explorer.exe "/select,$zip"
 Start-Process $store
 Start-Process notepad.exe $paste
 Start-Process "https://chrome.google.com/webstore/devconsole"
-Start-Process "https://webdevuk1.github.io/brushbuddy/privacy.html"
+Start-Process "https://brushbuddy-roan.vercel.app/privacy.html"
 Write-Host "Ready: upload zip, copy from Notepad, add screenshots from store folder."

@@ -6,8 +6,8 @@ Use this after `dist/BrushBuddy-store.zip` is built and legal pages are live on 
 
 | Field | URL |
 |--------|-----|
-| Privacy policy | `https://webdevuk1.github.io/brushbuddy/privacy.html` |
-| Official website (optional) | `https://webdevuk1.github.io/brushbuddy/` |
+| Privacy policy | `https://brushbuddy-roan.vercel.app/privacy.html` |
+| Official website (optional) | `https://brushbuddy-roan.vercel.app/` |
 
 If your repo name differs, replace `brushbuddy` in the path.
 
