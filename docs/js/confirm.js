@@ -41,7 +41,7 @@
         if (settled) return;
         settled = true;
         settle = null;
-        form.removeEventListener("close", onClose);
+        el.removeEventListener("close", onClose);
         el.removeEventListener("cancel", onCancel);
         resolve(value);
       }
@@ -52,7 +52,7 @@
       function onCancel() {
         finish(false);
       }
-      form.addEventListener("close", onClose);
+      el.addEventListener("close", onClose);
       el.addEventListener("cancel", onCancel);
       if (typeof el.showModal === "function") el.showModal();
       else finish(window.confirm((opts.title || DEFAULT_TITLE) + "\n\n" + (opts.message || DEFAULT_MESSAGE)));
