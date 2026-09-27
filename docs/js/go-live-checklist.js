@@ -194,7 +194,7 @@
         { id: "admin-not-linked", label: "Admin not on public nav; robots Disallow /admin/", defaultDone: true },
         {
           id: "site-extension-sync-tested",
-          label: "You tested website ↔ extension sync (0.3.9+)",
+          label: "You tested website ↔ extension sync (0.3.12+)",
           defaultDone: false,
         },
       ],
@@ -204,7 +204,7 @@
       items: [
         { id: "smoke-pass", label: "scripts/smoke.mjs passes on latest build", defaultDone: true },
         { id: "store-zip-current", label: "dist/BrushBuddy-store.zip rebuilt (pack-store.ps1)", defaultDone: true },
-        { id: "ext-reload-latest", label: "You reloaded unpacked extension at 0.3.9 in chrome://extensions", defaultDone: false },
+        { id: "ext-reload-latest", label: "You reloaded unpacked extension at 0.3.12 in chrome://extensions", defaultDone: false },
         { id: "chrome-review", label: "Chrome review approved OR trusted-tester install works", defaultDone: false },
         { id: "homepage-url-store", label: "Chrome listing homepage = https://brushbuddy-roan.vercel.app/", defaultDone: false },
         { id: "visibility-public", label: "Store visibility Public / Unlisted when ready", defaultDone: false },
