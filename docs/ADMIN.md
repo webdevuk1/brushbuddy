@@ -23,7 +23,7 @@ Users can open **Report a bug** on the website and extension. Reports POST to `/
 1. Create a Resend account and API key.
 2. Vercel → **Environment Variables** (Production):
    - `RESEND_API_KEY` — your Resend API key
-   - `BUG_REPORT_TO_EMAIL` — inbox that receives reports (your email)
+   - `BUG_REPORT_TO_EMAIL` — optional; defaults to `info@jameshoy.dev`
    - `RESEND_FROM` — optional verified sender, e.g. `BrushBuddy <hello@yourdomain.com>` (defaults to Resend onboarding address for testing)
 3. **Redeploy** after saving.
 

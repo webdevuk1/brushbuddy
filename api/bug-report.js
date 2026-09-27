@@ -36,7 +36,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  const toEmail = process.env.BUG_REPORT_TO_EMAIL;
+  const toEmail = process.env.BUG_REPORT_TO_EMAIL || "info@jameshoy.dev";
   const fromEmail = process.env.RESEND_FROM || "BrushBuddy <onboarding@resend.dev>";
 
   if (!apiKey || !toEmail) {
