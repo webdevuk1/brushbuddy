@@ -85,18 +85,50 @@ h2 {
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 118px auto auto;
+  grid-template-columns: 1fr auto auto auto;
   gap: 8px;
   align-items: center;
   padding: 10px;
 }
 
-.text-input, .time-input {
+.text-input {
   width: 100%;
   background: #18181b;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   padding: 8px 10px;
+}
+
+.time-fields {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.time-hour,
+.time-minute {
+  width: 3rem;
+  text-align: center;
+  background: #18181b;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 8px 6px;
+  font: inherit;
+  color: inherit;
+  -moz-appearance: textfield;
+}
+
+.time-hour::-webkit-outer-spin-button,
+.time-hour::-webkit-inner-spin-button,
+.time-minute::-webkit-outer-spin-button,
+.time-minute::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.time-sep {
+  color: var(--muted);
+  font-weight: 600;
 }
 
 .icon-btn {
@@ -196,5 +228,5 @@ h2 {
 
 @media (max-width: 560px) {
   .row { grid-template-columns: 1fr auto; }
-  .time-input { grid-column: 1 / -1; }
+  .time-fields { grid-column: 1 / -1; }
 }

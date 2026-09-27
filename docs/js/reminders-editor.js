@@ -5,6 +5,18 @@
     return String(value).padStart(2, "0");
   }
 
+  function clampHour(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return 8;
+    return Math.min(23, Math.max(0, Math.round(n)));
+  }
+
+  function clampMinute(value) {
+    const n = Number(value);
+    if (!Number.isFinite(n)) return 0;
+    return Math.min(59, Math.max(0, Math.round(n)));
+  }
+
   function send(type, body) {
     if (!root.BrushSite) return Promise.resolve({ ok: false });
     return root.BrushSite.sendMessage(Object.assign({ type: type }, body));
@@ -13,8 +25,11 @@
   function wire(config) {
     const list = config.list;
     const addButton = config.addButton;
+    const sound = config.sound;
     const soundTone = config.soundTone;
     const soundPlay = config.soundPlay;
+    const notifications = config.notifications;
+    const motivation = config.motivation;
     const enabled = config.enabled;
     const status = config.status;
     const compact = Boolean(config.compact);
@@ -25,9 +40,16 @@
     let saveChain = Promise.resolve();
     let ignoreRemoteLoadUntil = 0;
 
-    list.addEventListener("input", onEdit);
+    list.addEventListener("input", (event) => {
+      if (event.target.classList.contains("label")) onEdit(event);
+    });
     list.addEventListener("change", onEdit);
     list.addEventListener("focusout", (event) => {
+      if (event.target.classList.contains("time-hour") || event.target.classList.contains("time-minute")) {
+        normalizeTimeField(event.target);
+        onEdit(event);
+        return;
+      }
       if (!event.target.classList.contains("label")) return;
       if (event.target.value.trim()) return;
       event.target.value = "Brush";
@@ -74,6 +96,9 @@
         scheduleSave();
       });
     }
+    if (sound) sound.addEventListener("change", scheduleSave);
+    if (notifications) notifications.addEventListener("change", scheduleSave);
+    if (motivation) motivation.addEventListener("change", scheduleSave);
     if (soundTone && root.BrushSoundTones) {
       soundTone.replaceChildren();
       BrushSoundTones.options().forEach((opt) => {
@@ -88,25 +113,39 @@
       soundPlay.addEventListener("click", (event) => {
         event.preventDefault();
         const id = soundTone ? soundTone.value : "classic";
-        if (root.BrushSoundTones) BrushSoundTones.preview(id);
+        if (root.BrushAlertSound) BrushAlertSound.play(id);
+        else if (root.BrushSoundTones) BrushSoundTones.preview(id);
       });
     }
-    function load(state, source) {
-      if (source === "remote" && Date.now() < ignoreRemoteLoadUntil) return;
-      reminders = state.reminders.map((item) => Object.assign({}, item));
+
+    function normalizeTimeField(el) {
+      const row = el.closest("[data-id]");
+      if (!row) return;
+      const hourEl = row.querySelector(".time-hour");
+      const minEl = row.querySelector(".time-minute");
+      if (!hourEl || !minEl) return;
+      hourEl.value = String(clampHour(hourEl.value));
+      minEl.value = pad(clampMinute(minEl.value));
+    }
+
+    function syncPrefsFromState(state) {
       if (enabled) enabled.checked = state.enabled;
+      if (sound) sound.checked = state.prefs.sound;
+      if (notifications) notifications.checked = state.prefs.notifications;
+      if (motivation) motivation.checked = state.prefs.showMotivationLine;
       if (soundTone) {
         soundTone.value = root.BrushSoundTones
           ? BrushSoundTones.sanitize(state.prefs.soundId)
           : state.prefs.soundId || "classic";
       }
-      render();
     }
 
-    async function loadFromRemote() {
-      if (Date.now() < ignoreRemoteLoadUntil) return;
-      const res = await send("GET_STATE");
-      if (res && res.state) load(res.state, "remote");
+    function load(state, source) {
+      if (source === "remote" && Date.now() < ignoreRemoteLoadUntil) return;
+      reminders = state.reminders.map((item) => Object.assign({}, item));
+      syncPrefsFromState(state);
+      if (source === "save") return;
+      render();
     }
 
     async function onEdit(event) {
@@ -114,12 +153,18 @@
       if (!row) return;
       const item = reminders.find((reminder) => reminder.id === row.dataset.id);
       if (!item) return;
-      if (event.target.classList.contains("label")) item.label = event.target.value;
-      if (event.target.classList.contains("time")) {
-        const match = /^(\d{2}):(\d{2})$/.exec(event.target.value);
-        if (!match) return;
-        item.hour = Number(match[1]);
-        item.minute = Number(match[2]);
+      if (event.target.classList.contains("label")) {
+        item.label = event.target.value;
+        scheduleSave();
+        return;
+      }
+      if (event.target.classList.contains("time-hour") || event.target.classList.contains("time-minute")) {
+        const hourEl = row.querySelector(".time-hour");
+        const minEl = row.querySelector(".time-minute");
+        item.hour = clampHour(hourEl && hourEl.value);
+        item.minute = clampMinute(minEl && minEl.value);
+        scheduleSave();
+        return;
       }
       if (event.target.classList.contains("on")) {
         if (!event.target.checked) {
@@ -130,8 +175,8 @@
           }
         }
         item.enabled = event.target.checked;
+        scheduleSave();
       }
-      scheduleSave();
     }
 
     function render() {
@@ -147,11 +192,32 @@
         label.value = item.label;
         label.setAttribute("aria-label", "Reminder name");
 
-        const time = document.createElement("input");
-        time.className = "time-input time";
-        time.type = "time";
-        time.value = pad(item.hour) + ":" + pad(item.minute);
-        time.setAttribute("aria-label", item.label + " time");
+        const timeWrap = document.createElement("div");
+        timeWrap.className = "time-fields";
+
+        const hour = document.createElement("input");
+        hour.className = "time-hour";
+        hour.type = "number";
+        hour.min = "0";
+        hour.max = "23";
+        hour.inputMode = "numeric";
+        hour.value = String(item.hour);
+        hour.setAttribute("aria-label", item.label + " hour");
+
+        const sep = document.createElement("span");
+        sep.className = "time-sep";
+        sep.textContent = ":";
+
+        const minute = document.createElement("input");
+        minute.className = "time-minute";
+        minute.type = "number";
+        minute.min = "0";
+        minute.max = "59";
+        minute.inputMode = "numeric";
+        minute.value = pad(item.minute);
+        minute.setAttribute("aria-label", item.label + " minute");
+
+        timeWrap.append(hour, sep, minute);
 
         const toggle = document.createElement("label");
         toggle.className = "switch";
@@ -171,7 +237,7 @@
         remove.setAttribute("aria-label", "Remove " + item.label);
         remove.textContent = "×";
 
-        row.append(label, time, toggle, remove);
+        row.append(label, timeWrap, toggle, remove);
         list.appendChild(row);
       });
       if (addButton) addButton.hidden = reminders.length >= 6;
@@ -188,7 +254,17 @@
           .catch(() => {
             if (status) status.textContent = "Couldn’t save. Try again.";
           });
-      }, 200);
+      }, 400);
+    }
+
+    function buildPrefs() {
+      const prefs = {
+        soundId: soundTone ? soundTone.value : "classic",
+      };
+      if (sound) prefs.sound = sound.checked;
+      if (notifications) prefs.notifications = notifications.checked;
+      if (motivation) prefs.showMotivationLine = motivation.checked;
+      return prefs;
     }
 
     async function persist() {
@@ -203,12 +279,7 @@
       const res = await send("SAVE", {
         enabled: enabled ? enabled.checked : true,
         reminders: payload,
-        prefs: {
-          sound: true,
-          soundId: soundTone ? soundTone.value : "classic",
-          notifications: true,
-          showMotivationLine: true,
-        },
+        prefs: buildPrefs(),
       });
       if (!res || !res.ok) {
         ignoreRemoteLoadUntil = 0;
@@ -219,7 +290,13 @@
       if (status && config.showSaveStatus) status.textContent = "Saved";
     }
 
-    return { load, loadFromRemote, scheduleSave };
+    async function loadFromRemote() {
+      if (Date.now() < ignoreRemoteLoadUntil) return;
+      const res = await send("GET_STATE");
+      if (res && res.state) load(res.state, "remote");
+    }
+
+    return { load, loadFromRemote, scheduleSave, render };
   }
 
   root.BrushRemindersEditor = { wire };
