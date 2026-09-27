@@ -105,25 +105,22 @@
     }
 
     function holdUntilTurnOffConfirmed(input, onConfirmed) {
-      let busy = false;
       async function requestOff(event) {
         if (!input.checked) return;
         event.preventDefault();
-        if (busy) return;
-        busy = true;
-        try {
-          const ok = await confirmTurnOff();
-          if (!ok) return;
-          input.checked = false;
-          onConfirmed();
-        } finally {
-          busy = false;
-        }
+        const ok = await confirmTurnOff();
+        if (!ok) return;
+        input.checked = false;
+        onConfirmed();
       }
-      input.addEventListener("pointerdown", (event) => {
-        if (event.button !== 0) return;
-        requestOff(event);
-      });
+      input.addEventListener(
+        "pointerdown",
+        (event) => {
+          if (event.button !== 0) return;
+          requestOff(event);
+        },
+        true
+      );
       input.addEventListener("keydown", (event) => {
         if (event.key !== " " && event.key !== "Enter") return;
         requestOff(event);
