@@ -75,14 +75,32 @@
       event.target.value = "Brush";
       onEdit(event);
     });
-    list.addEventListener("click", (event) => {
-      const remove = event.target.closest("[data-remove]");
-      if (!remove) return;
-      const row = remove.closest("[data-id]");
-      reminders = reminders.filter((item) => item.id !== row.dataset.id);
-      render();
-      scheduleSave();
-    });
+    list.addEventListener(
+      "click",
+      async (event) => {
+        const toggle = event.target.closest("input.on");
+        if (toggle && toggle.checked) {
+          event.preventDefault();
+          const row = toggle.closest("[data-id]");
+          const item = row && reminders.find((reminder) => reminder.id === row.dataset.id);
+          if (!item) return;
+          const ok = await confirmTurnOff();
+          if (ok) {
+            toggle.checked = false;
+            item.enabled = false;
+            scheduleSave();
+          }
+          return;
+        }
+        const remove = event.target.closest("[data-remove]");
+        if (!remove) return;
+        const row = remove.closest("[data-id]");
+        reminders = reminders.filter((item) => item.id !== row.dataset.id);
+        render();
+        scheduleSave();
+      },
+      true
+    );
 
     if (addButton) {
       addButton.addEventListener("click", () => {
@@ -105,15 +123,21 @@
     }
 
     if (enabled) {
-      enabled.addEventListener("change", async () => {
-        if (!enabled.checked) {
+      enabled.addEventListener(
+        "click",
+        async (event) => {
+          if (!enabled.checked) return;
+          event.preventDefault();
           const ok = await confirmTurnOff();
-          if (!ok) {
-            enabled.checked = true;
-            return;
+          if (ok) {
+            enabled.checked = false;
+            scheduleSave();
           }
-        }
-        scheduleSave();
+        },
+        true
+      );
+      enabled.addEventListener("change", () => {
+        if (enabled.checked) scheduleSave();
       });
     }
     if (sound) sound.addEventListener("change", scheduleSave);
@@ -200,14 +224,8 @@
         return;
       }
       if (event.target.classList.contains("on")) {
-        if (!event.target.checked) {
-          const ok = await confirmTurnOff();
-          if (!ok) {
-            event.target.checked = true;
-            return;
-          }
-        }
-        item.enabled = event.target.checked;
+        if (!event.target.checked) return;
+        item.enabled = true;
         scheduleSave();
       }
     }
