@@ -78,6 +78,14 @@
     }, 80);
   });
 
+  if (globalThis.BrushBugReport && globalThis.BrushSiteUrls) {
+    BrushBugReport.wire({
+      trigger: document.getElementById("bug-report"),
+      apiUrl: BrushSiteUrls.bugReport,
+      source: "website",
+    });
+  }
+
   BrushSite.waitForExtension(5000).then((ok) => {
     if (!ok) {
       banner.hidden = false;

@@ -65,6 +65,15 @@
     else status.textContent = "Open a normal website tab, then preview again.";
   });
 
+  if (globalThis.BrushBugReport && globalThis.BrushSiteUrls) {
+    BrushBugReport.wire({
+      trigger: document.getElementById("bug-report"),
+      apiUrl: BrushSiteUrls.bugReport,
+      source: "extension-settings",
+      version: chrome.runtime.getManifest().version,
+    });
+  }
+
   chrome.runtime.sendMessage({ type: "GET_STATE" }).then((res) => {
     if (res && res.state) editor.load(res.state);
   });

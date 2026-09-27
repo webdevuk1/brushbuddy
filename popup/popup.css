@@ -475,6 +475,11 @@ h1 { font-size: 16px; letter-spacing: -0.02em; }
 
 
 
+.foot {
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
 .foot a { color: var(--mint); text-decoration: none; }
 
 

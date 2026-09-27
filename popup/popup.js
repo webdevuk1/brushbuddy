@@ -93,6 +93,15 @@
     });
   }
 
+  if (globalThis.BrushBugReport && globalThis.BrushSiteUrls) {
+    BrushBugReport.wire({
+      trigger: document.getElementById("bug-report"),
+      apiUrl: BrushSiteUrls.bugReport,
+      source: "extension-popup",
+      version: chrome.runtime.getManifest().version,
+    });
+  }
+
   init();
   const tick = setInterval(refreshSummary, 60000);
   window.addEventListener("unload", () => clearInterval(tick));

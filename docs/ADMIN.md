@@ -16,6 +16,19 @@ Session cookie is HttpOnly, signed server-side (7 days). Failed logins are rate-
 
 `vercel dev` from the repo root serves both `docs/` and `/api/admin/auth`. Without env vars you will see the “Admin locked” setup screen.
 
+## Bug reports (email)
+
+Users can open **Report a bug** on the website and extension. Reports POST to `/api/bug-report` and email you via [Resend](https://resend.com/).
+
+1. Create a Resend account and API key.
+2. Vercel → **Environment Variables** (Production):
+   - `RESEND_API_KEY` — your Resend API key
+   - `BUG_REPORT_TO_EMAIL` — inbox that receives reports (your email)
+   - `RESEND_FROM` — optional verified sender, e.g. `BrushBuddy <hello@yourdomain.com>` (defaults to Resend onboarding address for testing)
+3. **Redeploy** after saving.
+
+Replies use the reporter’s email as `Reply-To`.
+
 ## Checklist ticks
 
 Checkbox state is stored in **localStorage** in your browser only (not on the server).
