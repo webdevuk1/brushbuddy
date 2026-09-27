@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "BrushBuddy",
-  "version": "0.3.16",
+  "version": "0.3.17",
   "description": "Your little buddy pops up when it's time to brush your teeth.",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqKCKM69oqKzVkt99knCC/WJ/09thJDlG5OTBM+WaK1JReiSCgX1BdQRULvRVa0iVK/8DOJK2yicd0JjhHHBbKWddCqN+so8GJci820f0YCRO7zO/GEbrEVSI4w6LAWXpK4gkvQjSSgaig+wz3Ie3P8qvngNmtd7TR0elEg3xapy1iZoOAX+arMScC+u0xJXJRYJablx+66K03VP7tb+WOdpeT4oEtIaEI96y+SjwHATOV1rvQ8i1wFH4VbJlTWU5nioCrMqwromgsFvM/SONPYC583mGmb2pJw1Ir3JZbj3V/oxxiloXIz7rJncQMNPj1dsWnHbzkBxXiiavoit8JQIDAQAB",
   "minimum_chrome_version": "109",
