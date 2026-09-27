@@ -198,7 +198,7 @@ try {
   const optionsShot = await optionsSession.send("Page.captureScreenshot", { format: "png" });
   fs.writeFileSync(path.join(storeDir, "settings.png"), Buffer.from(optionsShot.data, "base64"));
   const ui = options.result?.value;
-  const affiliateOn = ui?.products === 3 && ui?.recommendedHidden === false;
+  const affiliateOn = ui?.products === 6 && ui?.recommendedHidden === false;
   const affiliateOff = ui?.products === 0 && ui?.recommendedHidden === true;
   if (ui?.title !== "BrushBuddy" || ui.rows !== 3 || (!affiliateOn && !affiliateOff)) {
     throw new Error("options ui: " + JSON.stringify(ui));

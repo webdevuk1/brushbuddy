@@ -406,6 +406,29 @@ h1 { font-size: 16px; letter-spacing: -0.02em; }
   font-size: 11px;
 }
 
+.popup-block {
+  flex-shrink: 0;
+}
+
+.popup-block .panel-title {
+  margin-bottom: 8px;
+}
+
+.popup-block .panel.card .panel-title {
+  margin-bottom: 8px;
+}
+
+.popup-block .store-support .panel-title {
+  margin-bottom: 4px;
+}
+
+.popup-fine {
+  margin: 8px 0 0;
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--muted);
+}
+
 
 
 

@@ -56,6 +56,35 @@
   document.querySelector(".logo-img").src = BrushCharacters.mark;
   document.getElementById("version").textContent = "v" + chrome.runtime.getManifest().version;
 
+  BrushSupport.wire();
+
+  const products = document.getElementById("products");
+  const disclosure = document.getElementById("disclosure");
+  if (BrushAffiliates.tag && products && disclosure) {
+    document.getElementById("recommended").hidden = false;
+    disclosure.textContent = BrushAffiliates.disclosure;
+    BrushAffiliates.products.forEach((product) => {
+      const link = document.createElement("a");
+      link.className = "product card";
+      link.href = product.url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer sponsored";
+      const text = document.createElement("span");
+      const name = document.createElement("span");
+      name.className = "product-name";
+      name.textContent = product.name;
+      const detail = document.createElement("span");
+      detail.className = "product-detail";
+      detail.textContent = product.detail;
+      text.append(name, detail);
+      const go = document.createElement("span");
+      go.className = "product-go";
+      go.textContent = "View";
+      link.append(text, go);
+      products.appendChild(link);
+    });
+  }
+
   init();
   const tick = setInterval(refreshSummary, 60000);
   window.addEventListener("unload", () => clearInterval(tick));

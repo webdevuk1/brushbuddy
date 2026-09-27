@@ -15,6 +15,8 @@
   document.getElementById("version").textContent = "v" + chrome.runtime.getManifest().version;
   document.getElementById("hero-buddy").src = BrushCharacters.hero;
 
+  BrushSupport.wire();
+
   if (BrushAffiliates.tag) {
     document.getElementById("recommended").hidden = false;
     disclosure.textContent = BrushAffiliates.disclosure;

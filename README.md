@@ -36,6 +36,8 @@ The app stays free. Recommended links live only on the settings page.
 
 Until that ID is set, the links are ordinary Amazon searches and the settings page says so.
 
+Optional **Support** block (settings + website): set `SUPPORT_URL` in `lib/support.js` and the same value in `docs/js/support.js` (Ko-fi, Stripe Payment Link, or PayPal.me). Hidden until the URL is set.
+
 ## Store
 
 1. Host the legal pages at a public HTTPS URL (`privacy.html` is required in the listing; also publish `terms.html` and `cookies.html`). Put your support email on the listing. Read `docs/LEGAL-COMPLIANCE.md` for cookies, GDPR, and the Data safety form.

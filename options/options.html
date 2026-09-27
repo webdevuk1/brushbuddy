@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../ui/theme.css" />
     <link rel="stylesheet" href="options.css" />
   </head>
-  <body class="page">
+  <body class="page extension-settings">
     <header class="hero">
       <div class="brand">
         <img id="hero-buddy" class="hero-buddy" alt="" width="72" height="72" />
@@ -43,9 +43,18 @@
       </div>
     </section>
 
+    <section id="support" hidden>
+      <h2>Keep it going</h2>
+      <div class="support card store-support">
+        <p id="support-headline" class="support-headline"></p>
+        <p id="support-blurb" class="support-blurb"></p>
+        <a id="support-link" class="btn primary support-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </section>
+
     <section id="recommended" hidden>
       <h2>Recommended</h2>
-      <div id="products" class="products"></div>
+      <div id="products" class="products store-compact"></div>
       <p id="disclosure" class="fine"></p>
     </section>
 
@@ -63,6 +72,7 @@
     <script src="../lib/confirm.js"></script>
     <script src="../lib/reminders-editor.js"></script>
     <script src="../lib/affiliates.js"></script>
+    <script src="../lib/support.js"></script>
     <script src="options.js"></script>
   </body>
 </html>

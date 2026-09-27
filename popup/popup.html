@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="../ui/theme.css" />
     <link rel="stylesheet" href="popup.css" />
   </head>
-  <body>
+  <body class="popup">
     <header class="top">
       <div class="brand">
         <img class="logo-img" alt="" width="36" height="36" />
@@ -46,6 +46,23 @@
       </div>
     </section>
 
+    <section id="support" class="popup-block" hidden>
+      <div class="panel card store-support">
+        <p class="panel-title">Keep it going</p>
+        <p id="support-headline" class="support-headline"></p>
+        <p id="support-blurb" class="support-blurb"></p>
+        <a id="support-link" class="btn primary support-link" href="#" target="_blank" rel="noopener noreferrer"></a>
+      </div>
+    </section>
+
+    <section id="recommended" class="popup-block" hidden>
+      <div class="panel card">
+        <p class="panel-title">Recommended</p>
+        <div id="products" class="products store-compact"></div>
+        <p id="disclosure" class="popup-fine"></p>
+      </div>
+    </section>
+
     <section class="actions card">
       <div id="waiting" class="waiting" hidden>
         <p class="panel-title">He’s on your tabs</p>
@@ -71,6 +88,8 @@
     <script src="../lib/time.js"></script>
     <script src="../lib/confirm.js"></script>
     <script src="../lib/reminders-editor.js"></script>
+    <script src="../lib/affiliates.js"></script>
+    <script src="../lib/support.js"></script>
     <script src="popup.js"></script>
   </body>
 </html>
