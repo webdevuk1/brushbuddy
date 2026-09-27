@@ -209,6 +209,26 @@ h2 {
   font-size: 13px;
 }
 
+.snooze-tools {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.snooze-label {
+  flex-shrink: 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.snooze-tools .sound-select {
+  flex: 1;
+  min-width: 0;
+}
+
 
 
 .fine { margin-top: 8px; font-size: 12px; color: var(--muted); }

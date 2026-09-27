@@ -50,6 +50,7 @@
     soundPlay: document.getElementById("sound-play"),
     notifications: document.getElementById("notifications"),
     motivation: document.getElementById("motivation"),
+    snoozeDuration: document.getElementById("snooze-duration"),
     enabled: document.getElementById("enabled"),
     status: status,
     compact: false,

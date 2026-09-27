@@ -2,7 +2,20 @@ importScripts("lib/time.js", "lib/storage.js");
 
 const ALARM_PREFIX = "brush:";
 const SNOOZE_PREFIX = "snooze:";
-const SNOOZE_MS = 10 * 60 * 1000;
+const DEFAULT_SNOOZE_MINUTES = 15;
+
+function snoozeMinutesFrom(state) {
+  if (!state || !state.prefs) return DEFAULT_SNOOZE_MINUTES;
+  return BrushStorage.sanitizeSnoozeMinutes(state.prefs.snoozeMinutes);
+}
+
+function snoozeMsFrom(state) {
+  return snoozeMinutesFrom(state) * 60 * 1000;
+}
+
+function snoozeButtonLabel(state) {
+  return "Snooze " + snoozeMinutesFrom(state) + " min";
+}
 const NUDGE_PREFIX = "nudge:";
 const NUDGE_MS = 60 * 1000;
 const PENDING_TTL_MS = 45 * 60 * 1000;
@@ -177,6 +190,7 @@ function showMessage(state, pending) {
     sound: Boolean(state.prefs.sound),
     soundId: state.prefs.soundId || "classic",
     showMotivationLine: state.prefs.showMotivationLine !== false,
+    snoozeMinutes: snoozeMinutesFrom(state),
   };
 }
 
@@ -252,6 +266,9 @@ async function saveFromUi(message) {
       if (typeof message.prefs.showMotivationLine === "boolean") {
         current.prefs.showMotivationLine = message.prefs.showMotivationLine;
       }
+      if (message.prefs.snoozeMinutes !== undefined) {
+        current.prefs.snoozeMinutes = BrushStorage.sanitizeSnoozeMinutes(message.prefs.snoozeMinutes);
+      }
     }
     if (!current.enabled) current.pending = null;
   });
@@ -290,6 +307,7 @@ function pendingPayload(state, pending) {
     sound: Boolean(state.prefs.sound),
     soundId: state.prefs.soundId || "classic",
     showMotivationLine: state.prefs.showMotivationLine !== false,
+    snoozeMinutes: snoozeMinutesFrom(state),
   };
 }
 
@@ -374,7 +392,7 @@ async function deliver(pending) {
   if (results.some((result) => result.shown)) return { shown: true, notified: false, waiting: false };
   if (results.some((result) => result.connected)) return { shown: false, notified: false, waiting: true };
   let notified = false;
-  if (state.prefs.notifications) notified = await notify(pending, state.prefs.sound);
+  if (state.prefs.notifications) notified = await notify(pending, state.prefs.sound, state);
   return { shown: false, notified: notified, waiting: false };
 }
 
@@ -431,7 +449,7 @@ async function hideEverywhere() {
   );
 }
 
-async function notify(pending, sound) {
+async function notify(pending, sound, state) {
   try {
     const label = pending.label && pending.label !== "Preview"
       ? pending.label + " — I'm brushing. Your turn."
@@ -441,7 +459,7 @@ async function notify(pending, sound) {
       iconUrl: chrome.runtime.getURL("icons/icon128.png"),
       title: "BrushBuddy",
       message: label,
-      buttons: [{ title: "Done" }, { title: "Snooze 10 min" }],
+      buttons: [{ title: "Done" }, { title: snoozeButtonLabel(state) }],
       silent: !sound,
       priority: 1,
     });
@@ -478,7 +496,7 @@ async function onPillAction(action, pendingId) {
   if (action === "snooze") {
     await chrome.alarms.clear(SNOOZE_PREFIX + pending.reminderId);
     await chrome.alarms.create(SNOOZE_PREFIX + pending.reminderId, {
-      when: Date.now() + SNOOZE_MS,
+      when: Date.now() + snoozeMsFrom(state),
     });
   }
   return { ok: true };
@@ -517,6 +535,7 @@ async function publicState(state) {
       soundId: state.prefs.soundId || "classic",
       notifications: state.prefs.notifications,
       showMotivationLine: state.prefs.showMotivationLine,
+      snoozeMinutes: snoozeMinutesFrom(state),
     },
     next: await nextAlarm(state),
     lastDoneAt: state.lastDoneAt,

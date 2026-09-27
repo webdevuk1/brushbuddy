@@ -406,6 +406,33 @@ h1 { font-size: 16px; letter-spacing: -0.02em; }
   font-size: 11px;
 }
 
+.snooze-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.snooze-label {
+  flex-shrink: 0;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.snooze-tools .sound-select {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 28px 6px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: #141416;
+  font-size: 11px;
+  color-scheme: dark;
+  appearance: none;
+}
+
 .popup-block {
   flex-shrink: 0;
 }

@@ -28,6 +28,13 @@
     }
   });
 
+  function syncSnoozeButton(state) {
+    const minutes =
+      state && state.prefs && state.prefs.snoozeMinutes ? state.prefs.snoozeMinutes : 15;
+    const btn = document.getElementById("mark-snooze");
+    if (btn) btn.textContent = "Snooze " + minutes + " min";
+  }
+
   const editor = BrushRemindersEditor.wire({
     list: document.getElementById("list"),
     addButton: document.getElementById("add"),
@@ -36,6 +43,7 @@
     soundPlay: document.getElementById("sound-play"),
     notifications: document.getElementById("notifications"),
     motivation: document.getElementById("motivation"),
+    snoozeDuration: document.getElementById("snooze-duration"),
     enabled: enabled,
     status: status,
     showSaveStatus: false,
@@ -105,6 +113,7 @@
 
   function applyLocalState(raw) {
     const state = BrushStorage.normalize(raw);
+    syncSnoozeButton(state);
     editor.load({
       enabled: state.enabled,
       reminders: state.reminders,
@@ -114,6 +123,7 @@
   }
 
   function applyRemoteState(state) {
+    syncSnoozeButton(state);
     editor.load(state);
     paintSummary(state);
   }

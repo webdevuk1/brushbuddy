@@ -22,7 +22,7 @@ A Chrome / Brave reminder to brush your teeth. Your buddy pops up on the site yo
 
 Morning 7:30 and night 21:30 start on. Afternoon is there but off. Change them in the popup’s **Edit times**.
 
-The buddy is drawn only while a reminder is waiting, and only on a normal website tab (`https://` or `http://`). On `chrome://` pages you’ll get a notification instead. If you close the buddy’s tab, open the popup and press **Done** or **Snooze 10 min**.
+The buddy is drawn only while a reminder is waiting, and only on a normal website tab (`https://` or `http://`). On `chrome://` pages you’ll get a notification instead. If you close the buddy’s tab, open the popup and press **Done** or **Snooze** (default 15 minutes; change under Alert sound).
 
 **Preview buddy** needs a normal website tab behind the popup.
 

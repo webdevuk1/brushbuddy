@@ -17,9 +17,12 @@
     return Math.min(59, Math.max(0, Math.round(n)));
   }
 
-  function send(type, body) {
-    if (!root.BrushSite) return Promise.resolve({ ok: false });
-    return root.BrushSite.sendMessage(Object.assign({ type: type }, body));
+  const SNOOZE_MINUTES_OPTIONS = [15, 30, 45, 60, 90, 120];
+
+  function sanitizeSnoozeMinutes(value) {
+    const n = Number(value);
+    if (SNOOZE_MINUTES_OPTIONS.includes(n)) return n;
+    return 15;
   }
 
   function wire(config) {
@@ -30,6 +33,7 @@
     const soundPlay = config.soundPlay;
     const notifications = config.notifications;
     const motivation = config.motivation;
+    const snoozeDuration = config.snoozeDuration;
     const enabled = config.enabled;
     const status = config.status;
     const compact = Boolean(config.compact);
@@ -99,6 +103,16 @@
     if (sound) sound.addEventListener("change", scheduleSave);
     if (notifications) notifications.addEventListener("change", scheduleSave);
     if (motivation) motivation.addEventListener("change", scheduleSave);
+    if (snoozeDuration) snoozeDuration.addEventListener("change", scheduleSave);
+    if (snoozeDuration) {
+      snoozeDuration.replaceChildren();
+      SNOOZE_MINUTES_OPTIONS.forEach((minutes) => {
+        const option = document.createElement("option");
+        option.value = String(minutes);
+        option.textContent = minutes + " minutes";
+        snoozeDuration.appendChild(option);
+      });
+    }
     if (soundTone && root.BrushSoundTones) {
       soundTone.replaceChildren();
       BrushSoundTones.options().forEach((opt) => {
@@ -133,6 +147,9 @@
       if (sound) sound.checked = state.prefs.sound;
       if (notifications) notifications.checked = state.prefs.notifications;
       if (motivation) motivation.checked = state.prefs.showMotivationLine;
+      if (snoozeDuration) {
+        snoozeDuration.value = String(sanitizeSnoozeMinutes(state.prefs.snoozeMinutes));
+      }
       if (soundTone) {
         soundTone.value = root.BrushSoundTones
           ? BrushSoundTones.sanitize(state.prefs.soundId)
@@ -264,6 +281,7 @@
       if (sound) prefs.sound = sound.checked;
       if (notifications) prefs.notifications = notifications.checked;
       if (motivation) prefs.showMotivationLine = motivation.checked;
+      if (snoozeDuration) prefs.snoozeMinutes = Number(snoozeDuration.value);
       return prefs;
     }
 
@@ -276,11 +294,13 @@
         enabled: Boolean(item.enabled),
         label: item.label,
       }));
-      const res = await send("SAVE", {
+      const message = {
+        type: "SAVE",
         enabled: enabled ? enabled.checked : true,
         reminders: payload,
         prefs: buildPrefs(),
-      });
+      };
+      const res = await chrome.runtime.sendMessage(message);
       if (!res || !res.ok) {
         ignoreRemoteLoadUntil = 0;
         if (status) status.textContent = "Couldn’t save. Try again.";
@@ -290,14 +310,8 @@
       if (status && config.showSaveStatus) status.textContent = "Saved";
     }
 
-    async function loadFromRemote() {
-      if (Date.now() < ignoreRemoteLoadUntil) return;
-      const res = await send("GET_STATE");
-      if (res && res.state) load(res.state, "remote");
-    }
-
-    return { load, loadFromRemote, scheduleSave, render };
+    return { load, scheduleSave, render };
   }
 
   root.BrushRemindersEditor = { wire };
-})(typeof window !== "undefined" ? window : globalThis);
+})(typeof globalThis !== "undefined" ? globalThis : this);

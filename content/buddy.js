@@ -24,6 +24,7 @@
         chime: shouldChime(message.pending, message.sound),
         soundId: message.soundId || "classic",
         showMotivationLine: message.showMotivationLine !== false,
+        snoozeMinutes: message.snoozeMinutes,
         buddyPosition: message.buddyPosition || message.pillPosition || null,
       });
       sendResponse({ shown: shown });
@@ -61,6 +62,7 @@
         chime: shouldChime(res.pending, res.sound),
         soundId: res.soundId || "classic",
         showMotivationLine: res.showMotivationLine !== false,
+        snoozeMinutes: res.snoozeMinutes,
         buddyPosition: res.buddyPosition || res.pillPosition || null,
       });
     } catch (_err) {
@@ -77,7 +79,7 @@
     currentId = pending.id;
     currentPos = opts.buddyPosition || null;
     host?.remove();
-    host = buildBuddy(pending, opts.showMotivationLine);
+    host = buildBuddy(pending, opts);
     document.documentElement.appendChild(host);
     requestAnimationFrame(() => applyPosition(currentPos));
     if (opts.chime && globalThis.BrushAlertSound && document.visibilityState === "visible") {
@@ -118,7 +120,14 @@
     return { title: title, sub: sub };
   }
 
-  function buildBuddy(pending, showMotivationLine) {
+  function snoozeLabel(minutes) {
+    const m = Number(minutes);
+    const safe = Number.isFinite(m) && m > 0 ? Math.round(m) : 15;
+    return "Snooze " + safe + " min";
+  }
+
+  function buildBuddy(pending, opts) {
+    const showMotivationLine = opts.showMotivationLine !== false;
     const copy = lines(pending, showMotivationLine);
     const el = document.createElement("div");
     el.id = HOST_ID;
@@ -151,7 +160,9 @@
     const actions = document.createElement("div");
     actions.className = "actions";
     const done = button("Done", "done", () => act("done", pending.id, done));
-    const snooze = button("Snooze", "snooze", () => act("snooze", pending.id, snooze));
+    const snooze = button(snoozeLabel(opts.snoozeMinutes), "snooze", () =>
+      act("snooze", pending.id, snooze)
+    );
     const close = button("×", "close", () => act("dismiss", pending.id, close));
     close.setAttribute("aria-label", "Dismiss");
     actions.append(done, snooze, close);
