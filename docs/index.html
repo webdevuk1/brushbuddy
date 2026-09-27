@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>BrushBuddy</title>
-    <link rel="stylesheet" href="site.css?v=6" />
+    <link rel="stylesheet" href="site.css?v=8" />
   </head>
   <body class="page">
     <p id="install-banner" class="banner" hidden>
@@ -38,7 +38,13 @@
     <section>
       <h2>How it feels</h2>
       <div class="prefs card">
-        <label class="check"><input id="sound" type="checkbox" /> Play alert sound</label>
+        <div class="sound-pref">
+          <label class="check sound-check"><input id="sound" type="checkbox" /> Play alert sound</label>
+          <div class="sound-tools">
+            <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
+            <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
+          </div>
+        </div>
         <label class="check"><input id="notifications" type="checkbox" /> Notify me if no page is open</label>
         <label class="check"><input id="motivation" type="checkbox" /> Show “Two minutes is enough.”</label>
       </div>
@@ -55,11 +61,12 @@
         <a href="privacy.html">Privacy</a>
         <a href="terms.html">Terms</a>
       </span>
-      <span>v0.3.11</span>
+      <span>v0.3.12</span>
     </footer>
 
-    <script src="js/site-api.js?v=7"></script>
-    <script src="js/reminders-editor.js?v=7"></script>
-    <script src="js/site-app.js?v=7"></script>
+    <script src="js/site-api.js?v=8"></script>
+    <script src="js/sound-tones.js?v=8"></script>
+    <script src="js/reminders-editor.js?v=8"></script>
+    <script src="js/site-app.js?v=8"></script>
   </body>
 </html>

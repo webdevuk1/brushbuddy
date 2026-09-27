@@ -44,6 +44,8 @@
     list: document.getElementById("list"),
     addButton: document.getElementById("add"),
     sound: document.getElementById("sound"),
+    soundTone: document.getElementById("sound-tone"),
+    soundPlay: document.getElementById("sound-play"),
     notifications: document.getElementById("notifications"),
     motivation: document.getElementById("motivation"),
     enabled: document.getElementById("enabled"),

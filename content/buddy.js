@@ -22,6 +22,7 @@
       }
       const shown = renderBuddy(message.pending, {
         chime: shouldChime(message.pending, message.sound),
+        soundId: message.soundId || "classic",
         showMotivationLine: message.showMotivationLine !== false,
         buddyPosition: message.buddyPosition || message.pillPosition || null,
       });
@@ -58,6 +59,7 @@
       }
       renderBuddy(res.pending, {
         chime: shouldChime(res.pending, res.sound),
+        soundId: res.soundId || "classic",
         showMotivationLine: res.showMotivationLine !== false,
         buddyPosition: res.buddyPosition || res.pillPosition || null,
       });
@@ -69,7 +71,7 @@
   function renderBuddy(pending, opts) {
     if (!pending || typeof pending.id !== "string") return false;
     if (host && currentId === pending.id) {
-      if (opts.chime && globalThis.BrushAlertSound) BrushAlertSound.startLoop();
+      if (opts.chime && globalThis.BrushAlertSound) BrushAlertSound.startLoop(opts.soundId || "classic");
       return true;
     }
     currentId = pending.id;
@@ -79,7 +81,7 @@
     document.documentElement.appendChild(host);
     requestAnimationFrame(() => applyPosition(currentPos));
     if (opts.chime && globalThis.BrushAlertSound && document.visibilityState === "visible") {
-      BrushAlertSound.startLoop();
+      BrushAlertSound.startLoop(opts.soundId || "classic");
     }
     return true;
   }

@@ -157,6 +157,41 @@ h2 { font-size: 15px; margin-bottom: 10px; }
   height: 16px;
 }
 
+.sound-pref {
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.sound-pref .sound-check {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.sound-tools {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+  padding-bottom: 6px;
+}
+
+.sound-select {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: rgba(0, 0, 0, 0.35);
+  color: var(--text);
+  font: inherit;
+}
+
+.sound-play {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
 .switch {
   position: relative;
   display: inline-flex;

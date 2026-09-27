@@ -324,7 +324,44 @@ h1 { font-size: 16px; letter-spacing: -0.02em; }
 
 
 
+.prefs .sound-pref {
+  padding: 8px 0 2px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.prefs .sound-pref .sound-check {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.prefs .sound-tools {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 6px;
+}
+
+.prefs .sound-select {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  color: inherit;
+  font: inherit;
+  font-size: 11px;
+}
+
+.prefs .sound-play {
+  flex-shrink: 0;
+  padding: 6px 10px;
+  font-size: 11px;
+}
+
 .prefs .check:first-of-type { border-top: 0; padding-top: 0; }
+
+.prefs .sound-pref + .check { border-top: 0; }
 
 
 

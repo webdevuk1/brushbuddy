@@ -15,7 +15,8 @@
 
   document.getElementById("preview").addEventListener("click", async () => {
     status.textContent = "Showing your buddy…";
-    BrushAlertSound.play();
+    const tone = document.getElementById("sound-tone");
+    BrushAlertSound.play(tone ? tone.value : "classic");
     try {
       const res = await chrome.runtime.sendMessage({ type: "PREVIEW" });
       if (res && res.shown) status.textContent = "It’s on your open website tab.";
@@ -31,6 +32,8 @@
     list: document.getElementById("list"),
     addButton: document.getElementById("add"),
     sound: document.getElementById("sound"),
+    soundTone: document.getElementById("sound-tone"),
+    soundPlay: document.getElementById("sound-play"),
     notifications: document.getElementById("notifications"),
     motivation: document.getElementById("motivation"),
     enabled: enabled,

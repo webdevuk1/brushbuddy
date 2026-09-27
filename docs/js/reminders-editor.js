@@ -14,6 +14,8 @@
     const list = config.list;
     const addButton = config.addButton;
     const sound = config.sound;
+    const soundTone = config.soundTone;
+    const soundPlay = config.soundPlay;
     const notifications = config.notifications;
     const motivation = config.motivation;
     const enabled = config.enabled;
@@ -59,6 +61,23 @@
 
     if (enabled) enabled.addEventListener("change", scheduleSave);
     sound.addEventListener("change", scheduleSave);
+    if (soundTone && root.BrushSoundTones) {
+      soundTone.replaceChildren();
+      BrushSoundTones.options().forEach((opt) => {
+        const option = document.createElement("option");
+        option.value = opt.id;
+        option.textContent = opt.label;
+        soundTone.appendChild(option);
+      });
+      soundTone.addEventListener("change", scheduleSave);
+    }
+    if (soundPlay) {
+      soundPlay.addEventListener("click", (event) => {
+        event.preventDefault();
+        const id = soundTone ? soundTone.value : "classic";
+        if (root.BrushSoundTones) BrushSoundTones.preview(id);
+      });
+    }
     notifications.addEventListener("change", scheduleSave);
     motivation.addEventListener("change", scheduleSave);
 
@@ -67,6 +86,11 @@
       reminders = state.reminders.map((item) => Object.assign({}, item));
       if (enabled) enabled.checked = state.enabled;
       sound.checked = state.prefs.sound;
+      if (soundTone) {
+        soundTone.value = root.BrushSoundTones
+          ? BrushSoundTones.sanitize(state.prefs.soundId)
+          : state.prefs.soundId || "classic";
+      }
       notifications.checked = state.prefs.notifications;
       motivation.checked = state.prefs.showMotivationLine;
       render();
@@ -165,6 +189,7 @@
         reminders: payload,
         prefs: {
           sound: sound.checked,
+          soundId: soundTone ? soundTone.value : "classic",
           notifications: notifications.checked,
           showMotivationLine: motivation.checked,
         },

@@ -99,6 +99,42 @@ h2 { font-size: 15px; margin-bottom: 10px; }
 
 .prefs .check { padding: 10px 0; border-top: 1px solid rgba(255, 255, 255, 0.06); }
 
+.prefs .sound-pref {
+  padding: 10px 0 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.prefs .sound-pref .sound-check {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.prefs .sound-tools {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.prefs .sound-select {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+  color: inherit;
+  font: inherit;
+}
+
+.prefs .sound-play {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.prefs .sound-pref + .check { border-top: 0; }
+
 .prefs .check:first-child { border-top: 0; }
 
 .products { display: flex; flex-direction: column; gap: 8px; }

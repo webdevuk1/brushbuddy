@@ -175,6 +175,7 @@ function showMessage(state, pending) {
     pending: pending,
     buddyPosition: state.prefs.buddyPosition,
     sound: Boolean(state.prefs.sound),
+    soundId: state.prefs.soundId || "classic",
     showMotivationLine: state.prefs.showMotivationLine !== false,
   };
 }
@@ -244,6 +245,7 @@ async function saveFromUi(message) {
     if (Array.isArray(message.reminders)) current.reminders = message.reminders;
     if (message.prefs && typeof message.prefs === "object") {
       if (typeof message.prefs.sound === "boolean") current.prefs.sound = message.prefs.sound;
+      if (typeof message.prefs.soundId === "string") current.prefs.soundId = message.prefs.soundId;
       if (typeof message.prefs.notifications === "boolean") {
         current.prefs.notifications = message.prefs.notifications;
       }
@@ -286,6 +288,7 @@ function pendingPayload(state, pending) {
     pending: pending,
     buddyPosition: state.prefs.buddyPosition,
     sound: Boolean(state.prefs.sound),
+    soundId: state.prefs.soundId || "classic",
     showMotivationLine: state.prefs.showMotivationLine !== false,
   };
 }
@@ -379,7 +382,7 @@ async function ensureScripts(tabId) {
   if (scriptedTabs.has(tabId)) return;
   await chrome.scripting.executeScript({
     target: { tabId: tabId },
-    files: ["lib/characters.js", "lib/alert-sound.js", "content/buddy.js"],
+    files: ["lib/characters.js", "lib/sound-tones.js", "lib/alert-sound.js", "content/buddy.js"],
   });
   scriptedTabs.add(tabId);
 }
@@ -511,6 +514,7 @@ async function publicState(state) {
     reminders: state.reminders,
     prefs: {
       sound: state.prefs.sound,
+      soundId: state.prefs.soundId || "classic",
       notifications: state.prefs.notifications,
       showMotivationLine: state.prefs.showMotivationLine,
     },

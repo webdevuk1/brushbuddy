@@ -39,7 +39,13 @@
 
     <section class="panel card prefs">
       <p class="panel-title">How it feels</p>
-      <label class="check"><input id="sound" type="checkbox" /> Play alert sound</label>
+      <div class="sound-pref">
+        <label class="check sound-check"><input id="sound" type="checkbox" /> Play alert sound</label>
+        <div class="sound-tools">
+          <select id="sound-tone" class="sound-select" aria-label="Alert sound"></select>
+          <button type="button" id="sound-play" class="btn ghost sound-play">Play</button>
+        </div>
+      </div>
       <label class="check"><input id="notifications" type="checkbox" /> Notify if no page is open</label>
       <label class="check"><input id="motivation" type="checkbox" /> Show “Two minutes is enough.”</label>
     </section>
@@ -64,6 +70,7 @@
     <script src="../lib/site-urls.js"></script>
     <script src="../lib/storage.js"></script>
     <script src="../lib/characters.js"></script>
+    <script src="../lib/sound-tones.js"></script>
     <script src="../lib/alert-sound.js"></script>
     <script src="../lib/time.js"></script>
     <script src="../lib/reminders-editor.js"></script>
