@@ -34,6 +34,12 @@ chrome.tabs.onRemoved.addListener((tabId) => {
   tabWakeTimers.delete(tabId);
 });
 
+chrome.storage.onChanged.addListener((changes, area) => {
+  if (area !== "local" || !changes.state) return;
+  cachedState = changes.state.newValue ? BrushStorage.normalize(changes.state.newValue) : null;
+  bustStateCache();
+});
+
 async function getPublicState() {
   const now = Date.now();
   if (stateCache.payload && now - stateCache.at < 1500) return stateCache.payload;
