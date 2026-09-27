@@ -75,32 +75,14 @@
       event.target.value = "Brush";
       onEdit(event);
     });
-    list.addEventListener(
-      "click",
-      async (event) => {
-        const toggle = event.target.closest("input.on");
-        if (toggle && toggle.checked) {
-          event.preventDefault();
-          const row = toggle.closest("[data-id]");
-          const item = row && reminders.find((reminder) => reminder.id === row.dataset.id);
-          if (!item) return;
-          const ok = await confirmTurnOff();
-          if (ok) {
-            toggle.checked = false;
-            item.enabled = false;
-            scheduleSave();
-          }
-          return;
-        }
-        const remove = event.target.closest("[data-remove]");
-        if (!remove) return;
-        const row = remove.closest("[data-id]");
-        reminders = reminders.filter((item) => item.id !== row.dataset.id);
-        render();
-        scheduleSave();
-      },
-      true
-    );
+    list.addEventListener("click", (event) => {
+      const remove = event.target.closest("[data-remove]");
+      if (!remove) return;
+      const row = remove.closest("[data-id]");
+      reminders = reminders.filter((item) => item.id !== row.dataset.id);
+      render();
+      scheduleSave();
+    });
 
     if (addButton) {
       addButton.addEventListener("click", () => {
@@ -122,20 +104,34 @@
       return root.BrushConfirm.ask();
     }
 
-    if (enabled) {
-      enabled.addEventListener(
-        "click",
-        async (event) => {
-          if (!enabled.checked) return;
-          event.preventDefault();
+    function holdUntilTurnOffConfirmed(input, onConfirmed) {
+      let busy = false;
+      async function requestOff(event) {
+        if (!input.checked) return;
+        event.preventDefault();
+        if (busy) return;
+        busy = true;
+        try {
           const ok = await confirmTurnOff();
-          if (ok) {
-            enabled.checked = false;
-            scheduleSave();
-          }
-        },
-        true
-      );
+          if (!ok) return;
+          input.checked = false;
+          onConfirmed();
+        } finally {
+          busy = false;
+        }
+      }
+      input.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        requestOff(event);
+      });
+      input.addEventListener("keydown", (event) => {
+        if (event.key !== " " && event.key !== "Enter") return;
+        requestOff(event);
+      });
+    }
+
+    if (enabled) {
+      holdUntilTurnOffConfirmed(enabled, scheduleSave);
       enabled.addEventListener("change", () => {
         if (enabled.checked) scheduleSave();
       });
@@ -280,6 +276,10 @@
         const track = document.createElement("span");
         track.className = "track";
         toggle.append(checkbox, track);
+        holdUntilTurnOffConfirmed(checkbox, () => {
+          item.enabled = false;
+          scheduleSave();
+        });
 
         const remove = document.createElement("button");
         remove.type = "button";
