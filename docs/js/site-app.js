@@ -11,12 +11,12 @@
 
   const AFFILIATE_TAG = "brushbuddy21-21";
   const PRODUCT_LIST = [
+    { name: "Water flosser", detail: "Cleans between teeth without string.", query: "water flosser" },
     { name: "Electric toothbrush", detail: "Runs a two-minute timer for you.", query: "electric toothbrush" },
     { name: "Toothpaste", detail: "The one dentists keep recommending.", query: "toothpaste" },
     { name: "Dental floss", detail: "The minute after you brush.", query: "dental floss" },
     { name: "Mouthwash", detail: "Rinse after brushing for extra freshness.", query: "mouthwash" },
     { name: "Toothbrush heads", detail: "Swap every few months — electric brushes need these.", query: "electric toothbrush replacement heads" },
-    { name: "Water flosser", detail: "Cleans between teeth without string.", query: "water flosser" },
   ];
 
   function productUrl(query) {
