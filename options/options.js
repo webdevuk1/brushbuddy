@@ -16,7 +16,7 @@
       link.className = "product card";
       link.href = product.url;
       link.target = "_blank";
-      link.rel = "noopener noreferrer";
+      link.rel = "noopener noreferrer sponsored";
       const text = document.createElement("span");
       const name = document.createElement("span");
       name.className = "product-name";

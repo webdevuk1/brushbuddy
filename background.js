@@ -71,8 +71,40 @@ chrome.alarms.onAlarm.addListener((alarm) => {
   onAlarm(alarm).catch((err) => console.error("BrushBuddy alarm", err));
 });
 
-chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
-  onMessage(message)
+const TRUSTED_SITE_PREFIXES = [
+  "https://brushbuddy-roan.vercel.app/",
+  "https://webdevuk1.github.io/brushbuddy/",
+];
+
+function senderPageUrl(sender) {
+  return String((sender && (sender.url || (sender.tab && sender.tab.url))) || "");
+}
+
+function isOurExtension(sender) {
+  return Boolean(sender && sender.id === chrome.runtime.id);
+}
+
+function isExtensionUiSender(sender) {
+  const url = senderPageUrl(sender);
+  return url.includes("/popup/") || url.includes("/options/");
+}
+
+function isTrustedWebsiteSender(sender) {
+  const url = senderPageUrl(sender);
+  return TRUSTED_SITE_PREFIXES.some((prefix) => url.startsWith(prefix));
+}
+
+function mayHandleMessage(sender, type) {
+  if (!isOurExtension(sender)) return false;
+  if (type === "GET_PENDING" || type === "PILL_ACTION" || type === "SAVE_POSITION") return true;
+  if (type === "GET_STATE" || type === "SAVE" || type === "PREVIEW") {
+    return isExtensionUiSender(sender) || isTrustedWebsiteSender(sender);
+  }
+  return false;
+}
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  onMessage(message, sender)
     .then(sendResponse)
     .catch((err) => {
       console.error("BrushBuddy message", err);
@@ -171,8 +203,9 @@ async function pingTab(tabId, message) {
   }
 }
 
-async function onMessage(message) {
+async function onMessage(message, sender) {
   if (!message || typeof message.type !== "string") return { ok: false };
+  if (!mayHandleMessage(sender, message.type)) return { ok: false, error: "forbidden" };
   if (message.type === "GET_STATE") {
     return getPublicState();
   }
