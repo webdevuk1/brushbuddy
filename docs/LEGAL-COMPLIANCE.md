@@ -1,4 +1,4 @@
-# Legal & compliance checklist (BrushBuddy)
+# Legal & compliance checklist (Brush Buddies)
 
 **This document is practical guidance, not legal advice.** For a company, high risk data, or if you are unsure, speak to a solicitor familiar with UK/EU privacy and consumer law.
 
@@ -7,7 +7,7 @@
 1. **Privacy policy URL** — Host `privacy.html` at a stable public HTTPS URL (GitHub Pages, Cloudflare Pages, etc.). Put that exact URL in the store listing.
 2. **Support email** — Required on the listing. Use an address you check; the legal pages point users there.
 3. **Single purpose & permissions** — Your listing must honestly describe why you need `host_permissions` (show buddy on open http/https tabs when a reminder fires; no page reading).
-4. **Data safety form** — In the Developer Dashboard, declare what the extension collects. For BrushBuddy as shipped:
+4. **Data safety form** — In the Developer Dashboard, declare what the extension collects. For Brush Buddies as shipped:
    - **No** data sent to the developer’s servers
    - **Local** storage only: reminder settings, prefs, pending state, last Done time, buddy position
    - **Not** used for advertising or sale
@@ -19,7 +19,7 @@ Suggested answers align with “data stored locally on device” and “not coll
 
 | Situation | Cookie banner? |
 |-----------|----------------|
-| BrushBuddy extension only (no analytics) | **No** — extension uses `chrome.storage`, not website cookies |
+| Brush Buddies extension only (no analytics) | **No** — extension uses `chrome.storage`, not website cookies |
 | Static legal pages, no trackers | **Usually no** |
 | Marketing website with Google Analytics / ads / Facebook pixel | **Yes** (UK GDPR / EU ePrivacy) — use a consent platform |
 | Amazon links user clicks | Amazon sets cookies **on amazon.com** — disclose in privacy; no banner needed in extension for that |
@@ -28,7 +28,7 @@ UK rules: [ICO guidance on cookies](https://ico.org.uk/for-organisations/direct-
 
 ## GDPR / UK GDPR (if you have UK or EEA users)
 
-You are a **controller** for any personal data you process. BrushBuddy minimizes this:
+You are a **controller** for any personal data you process. Brush Buddies minimizes this:
 
 - **No accounts, no cloud database** — most “rights” requests are satisfied by uninstalling or clearing extension data.
 - **Document** what you do in `privacy.html` (done).
@@ -44,7 +44,7 @@ Not always mandatory for a free extension, but **recommended** to limit liabilit
 If you set `AFFILIATE_TAG` in `lib/affiliates.js`:
 
 - Follow [Amazon’s operating agreement](https://affiliate-program.amazon.co.uk/help/operating/policies) and **clearly disclose** affiliate relationship (FTC-style: “we may earn a commission” — in privacy + on settings page via `BrushAffiliates.disclosure`).
-- Do not imply Amazon endorses BrushBuddy.
+- Do not imply Amazon endorses Brush Buddies.
 
 ## Hosting the legal pages (recommended)
 

@@ -58,7 +58,7 @@
 
   document.getElementById("preview").addEventListener("click", async () => {
     if (!BrushSite.extensionConnected()) {
-      status.textContent = "Install BrushBuddy to preview on a tab.";
+      status.textContent = "Install Brush Buddies to preview on a tab.";
       return;
     }
     status.textContent = "Showing your buddy…";
@@ -89,7 +89,7 @@
   BrushSite.waitForExtension(5000).then((ok) => {
     if (!ok) {
       banner.hidden = false;
-      status.textContent = "Install BrushBuddy to sync settings with this page.";
+      status.textContent = "Install Brush Buddies to sync settings with this page.";
       return;
     }
     banner.hidden = true;

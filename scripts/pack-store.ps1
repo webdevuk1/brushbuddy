@@ -1,6 +1,6 @@
 $root = Split-Path $PSScriptRoot -Parent
 $stage = Join-Path $root "dist\stage"
-$zip = Join-Path $root "dist\BrushBuddy-store.zip"
+$zip = Join-Path $root "dist\BrushBuddies-store.zip"
 
 if (Test-Path $stage) { Remove-Item $stage -Recurse -Force }
 New-Item -ItemType Directory -Force -Path $stage | Out-Null

@@ -1,5 +1,5 @@
 {
-  "name": "brushbuddy",
+  "name": "brush-buddies",
   "private": true,
   "scripts": {
     "dev": "serve docs -l 3000",

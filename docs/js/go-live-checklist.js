@@ -16,7 +16,7 @@
         },
         {
           id: "no-data-to-our-servers",
-          label: "Reminder data stays on device; extension does not send settings to BrushBuddy servers",
+          label: "Reminder data stays on device; extension does not send settings to Brush Buddies servers",
           defaultDone: true,
         },
         {
@@ -101,7 +101,7 @@
         },
         {
           id: "medical-not-advice",
-          label: "Terms state BrushBuddy is not medical/dental advice",
+          label: "Terms state Brush Buddies is not medical/dental advice",
           defaultDone: true,
         },
         {
@@ -203,7 +203,7 @@
       title: "Product quality & Chrome release",
       items: [
         { id: "smoke-pass", label: "scripts/smoke.mjs passes on latest build", defaultDone: true },
-        { id: "store-zip-current", label: "dist/BrushBuddy-store.zip rebuilt (pack-store.ps1)", defaultDone: true },
+        { id: "store-zip-current", label: "dist/BrushBuddies-store.zip rebuilt (pack-store.ps1)", defaultDone: true },
         {
           id: "store-submitted-review",
           label: "Store package submitted — waiting on Google review",

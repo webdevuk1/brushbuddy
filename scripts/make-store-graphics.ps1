@@ -118,39 +118,114 @@ Draw-Buddy $icon.Graphics $iconPath 0 0 128
 Save-Opaque $icon.Bitmap (Join-Path $out "store-icon-128.png")
 $icon.Graphics.Dispose(); $icon.Bitmap.Dispose()
 
+function Fill-Night($g, [int]$w, [int]$h) {
+  $bg = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 9, 9, 11))
+  $g.FillRectangle($bg, 0, 0, $w, $h)
+  $bg.Dispose()
+}
+
+function Draw-BuddyCard($g, [string]$path, [int]$x, [int]$y, [int]$size) {
+  $loaded = New-Object System.Drawing.Bitmap $path
+  $minX = $loaded.Width; $minY = $loaded.Height; $maxX = 0; $maxY = 0
+  for ($py = 0; $py -lt $loaded.Height; $py += 2) {
+    for ($px = 0; $px -lt $loaded.Width; $px += 2) {
+      $c = $loaded.GetPixel($px, $py)
+      if ($c.R -gt 240 -and $c.G -gt 240 -and $c.B -gt 240) { continue }
+      if ($px -lt $minX) { $minX = $px }
+      if ($py -lt $minY) { $minY = $py }
+      if ($px -gt $maxX) { $maxX = $px }
+      if ($py -gt $maxY) { $maxY = $py }
+    }
+  }
+  $minX += 2; $minY += 2; $maxX -= 2; $maxY -= 2
+  $srcW = [Math]::Max(1, $maxX - $minX)
+  $srcH = [Math]::Max(1, $maxY - $minY)
+  $card = New-Object System.Drawing.Bitmap $size, $size, ([System.Drawing.Imaging.PixelFormat]::Format32bppArgb)
+  $cg = [System.Drawing.Graphics]::FromImage($card)
+  $cg.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+  $cg.PixelOffsetMode = [System.Drawing.Drawing2D.PixelOffsetMode]::HighQuality
+  $cg.SmoothingMode = [System.Drawing.Drawing2D.SmoothingMode]::AntiAlias
+  $scale = [Math]::Max($size / $srcW, $size / $srcH)
+  $dw = [int]($srcW * $scale)
+  $dh = [int]($srcH * $scale)
+  $dx = [int](($size - $dw) / 2)
+  $dy = [int](($size - $dh) / 2)
+  $dest = New-Object System.Drawing.Rectangle $dx, $dy, $dw, $dh
+  $srcRect = New-Object System.Drawing.Rectangle $minX, $minY, $srcW, $srcH
+  $cg.DrawImage($loaded, $dest, $srcRect, [System.Drawing.GraphicsUnit]::Pixel)
+  $cg.Dispose()
+  $loaded.Dispose()
+  $brush = New-Object System.Drawing.TextureBrush $card
+  $brush.WrapMode = [System.Drawing.Drawing2D.WrapMode]::Clamp
+  $brush.TranslateTransform($x, $y)
+  $r = [int]($size * 0.25)
+  $d = $r * 2
+  $round = New-Object System.Drawing.Drawing2D.GraphicsPath
+  $round.AddArc($x, $y, $d, $d, 180, 90)
+  $round.AddArc(($x + $size - $d), $y, $d, $d, 270, 90)
+  $round.AddArc(($x + $size - $d), ($y + $size - $d), $d, $d, 0, 90)
+  $round.AddArc($x, ($y + $size - $d), $d, $d, 90, 90)
+  $round.CloseFigure()
+  $g.FillPath($brush, $round)
+  $round.Dispose()
+  $brush.Dispose()
+  $card.Dispose()
+}
+
+function Draw-MintGlow($g, [int]$x, [int]$y, [int]$w, [int]$h, [int]$alpha) {
+  $path = New-Object System.Drawing.Drawing2D.GraphicsPath
+  $path.AddEllipse($x, $y, $w, $h)
+  $brush = New-Object System.Drawing.Drawing2D.PathGradientBrush $path
+  $brush.CenterColor = [System.Drawing.Color]::FromArgb($alpha, 110, 231, 183)
+  $brush.SurroundColors = @([System.Drawing.Color]::FromArgb(0, 110, 231, 183))
+  $g.FillPath($brush, $path)
+  $brush.Dispose()
+  $path.Dispose()
+}
+
 # --- Marquee 1400x560 ---
 $m = New-Canvas 1400 560
-Fill-Gradient $m.Graphics 1400 560
+Fill-Night $m.Graphics 1400 560
+Draw-MintGlow $m.Graphics 700 -80 760 720 110
+Draw-MintGlow $m.Graphics 820 40 500 500 72
+Draw-MintGlow $m.Graphics -140 340 460 300 28
+$kicker = New-Object System.Drawing.Font "Segoe UI", 16, ([System.Drawing.FontStyle]::Bold)
 $title = New-Object System.Drawing.Font "Segoe UI", 64, ([System.Drawing.FontStyle]::Bold)
-$sub = New-Object System.Drawing.Font "Segoe UI", 26, ([System.Drawing.FontStyle]::Regular)
+$lead = New-Object System.Drawing.Font "Segoe UI", 22, ([System.Drawing.FontStyle]::Regular)
+$sub = New-Object System.Drawing.Font "Segoe UI", 18, ([System.Drawing.FontStyle]::Regular)
+$mint = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 110, 231, 183))
 $white = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 250, 250, 250))
-$soft = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 110, 231, 183))
-$m.Graphics.DrawString("BrushBuddy", $title, $white, 72, 150)
-$m.Graphics.DrawString("Your little buddy pops up", $sub, $white, 76, 270)
-$m.Graphics.DrawString("when it's time to brush.", $sub, $soft, 76, 312)
-$px = 76
-foreach ($label in @("On the page you're on", "Done or snooze", "Stays on your device")) {
-  $px += (Draw-Pill $m.Graphics $label $px 400) + 14
-}
-Draw-Buddy $m.Graphics $buddyPath 980 70 420
+$leadBrush = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 228, 228, 232))
+$muted = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 168, 168, 176))
+$m.Graphics.DrawString("TIME TO BRUSH", $kicker, $mint, 80, 128)
+$m.Graphics.DrawString("Brush Buddies", $title, $white, 76, 158)
+$m.Graphics.DrawString("Your buddy pops up on the site you already have open.", $lead, $leadBrush, 80, 268)
+$m.Graphics.DrawString("Tap Done after you brush, snooze if you are busy, or close him.", $sub, $muted, 80, 312)
+Draw-BuddyCard $m.Graphics $buddyPath 900 78 390
 Save-Opaque $m.Bitmap (Join-Path $out "marquee-1400x560.png")
-$title.Dispose(); $sub.Dispose(); $white.Dispose(); $soft.Dispose()
+$kicker.Dispose(); $title.Dispose(); $lead.Dispose(); $sub.Dispose()
+$mint.Dispose(); $white.Dispose(); $leadBrush.Dispose(); $muted.Dispose()
 $m.Graphics.Dispose(); $m.Bitmap.Dispose()
 
 # --- Small promo 440x280 ---
 $s = New-Canvas 440 280
-Fill-Gradient $s.Graphics 440 280
-$st = New-Object System.Drawing.Font "Segoe UI", 28, ([System.Drawing.FontStyle]::Bold)
-$ss = New-Object System.Drawing.Font "Segoe UI", 13, ([System.Drawing.FontStyle]::Regular)
+Fill-Night $s.Graphics 440 280
+Draw-MintGlow $s.Graphics 120 -50 380 380 110
+Draw-MintGlow $s.Graphics 190 30 230 230 64
+$sk = New-Object System.Drawing.Font "Segoe UI", 11, ([System.Drawing.FontStyle]::Bold)
+$st = New-Object System.Drawing.Font "Segoe UI", 22, ([System.Drawing.FontStyle]::Bold)
+$ss = New-Object System.Drawing.Font "Segoe UI", 12, ([System.Drawing.FontStyle]::Regular)
+$mint = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 110, 231, 183))
 $white = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 250, 250, 250))
-$soft = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 214, 228, 222))
-$s.Graphics.DrawString("BrushBuddy", $st, $white, 24, 78)
-$s.Graphics.DrawString("Time to brush.", $ss, $soft, 26, 128)
-$s.Graphics.DrawString("A gentle reminder", $ss, $soft, 26, 150)
-$s.Graphics.DrawString("on the page you're on.", $ss, $soft, 26, 172)
-Draw-Buddy $s.Graphics $buddyPath 248 36 200
+$muted = New-Object System.Drawing.SolidBrush ([System.Drawing.Color]::FromArgb(255, 196, 196, 204))
+$s.Graphics.DrawString("TIME TO BRUSH", $sk, $mint, 24, 64)
+$s.Graphics.DrawString("Brush Buddies", $st, $white, 22, 86)
+$s.Graphics.DrawString("He pops up on the", $ss, $muted, 24, 136)
+$s.Graphics.DrawString("page you're on.", $ss, $muted, 24, 156)
+Draw-BuddyCard $s.Graphics $buddyPath 236 36 168
 Save-Opaque $s.Bitmap (Join-Path $out "small-promo-440x280.png")
-$st.Dispose(); $ss.Dispose(); $white.Dispose(); $soft.Dispose()
+$sk.Dispose(); $st.Dispose(); $ss.Dispose()
+$mint.Dispose(); $white.Dispose(); $muted.Dispose()
 $s.Graphics.Dispose(); $s.Bitmap.Dispose()
 
 function New-Screenshot([string]$shotPath, [string]$kicker, [string]$headline, [string]$dest, [System.Drawing.Color]$pad) {

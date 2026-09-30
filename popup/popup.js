@@ -24,7 +24,7 @@
       else if (res && res.notified) status.textContent = "No website was open, so a notification was sent.";
       else status.textContent = "Open a normal website tab and try again.";
     } catch (_err) {
-      status.textContent = "Couldn’t reach BrushBuddy. Reload the extension.";
+      status.textContent = "Couldn’t reach Brush Buddies. Reload the extension.";
     }
   });
 
@@ -114,7 +114,7 @@
       if (res && res.state) applyRemoteState(res.state);
     } catch (_err) {
       if (!local.state) {
-        nextTitle.textContent = "BrushBuddy is waking up";
+        nextTitle.textContent = "Brush Buddies are waking up";
         nextSub.textContent = "Close this and open it again.";
       }
     }

@@ -1,6 +1,6 @@
-# Chrome Web Store submission — BrushBuddy
+# Chrome Web Store submission — Brush Buddies
 
-Use this after `dist/BrushBuddy-store.zip` is built and legal pages are live on GitHub Pages.
+Use this after `dist/BrushBuddies-store.zip` is built and legal pages are live on GitHub Pages.
 
 ## URLs (fill after Pages is enabled)
 
@@ -14,11 +14,11 @@ If your repo name differs, replace `brushbuddy` in the path.
 ## Upload package
 
 1. [Chrome Web Store Developer Dashboard](https://chrome.google.com/webstore/devconsole)
-2. **New item** → upload `dist/BrushBuddy-store.zip`
+2. **New item** → upload `dist/BrushBuddies-store.zip`
 3. **Store listing**
-   - **Name:** BrushBuddy
+   - **Name:** Brush Buddies
    - **Summary:** Your little buddy pops up when it's time to brush your teeth.
-   - **Description:** BrushBuddy reminds you to brush at the times you choose. Set morning and night (or more) in the toolbar popup. When a reminder is due, your buddy appears on the website tab you have open — Done, Snooze, or dismiss. Optional sound and system notifications if no tab can show him. All settings stay on your device; no account required.
+   - **Description:** Brush Buddies reminds you to brush at the times you choose. Set morning and night (or more) in the toolbar popup. When a reminder is due, your buddy appears on the website tab you have open — Done, Snooze, or dismiss. Optional sound and system notifications if no tab can show him. All settings stay on your device; no account required.
    - **Category:** Productivity or Health & Fitness
    - **Language:** English
 4. **Graphics:** `store/reminder.png`, `store/settings.png` (1280×800 from smoke test)
@@ -31,7 +31,7 @@ If your repo name differs, replace `brushbuddy` in the path.
 
 ## Permission justification (host access)
 
-> BrushBuddy only injects its own buddy UI on http/https tabs when a reminder the user scheduled is active. It does not read, collect, or transmit page content. Host access is required to draw the reminder on the site the user is already viewing.
+> Brush Buddies only injects its own buddy UI on http/https tabs when a reminder the user scheduled is active. It does not read, collect, or transmit page content. Host access is required to draw the reminder on the site the user is already viewing.
 
 ## Data safety (typical answers for this build)
 

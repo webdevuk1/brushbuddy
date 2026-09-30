@@ -87,8 +87,8 @@ public static class ToolbarIcon {
 }
 "@
 
-$src = "C:\Users\james\.cursor\projects\d-cursor-ai-BrushPill\assets\brushbuddy-toolbar-icon.png"
-$out = "d:\cursor ai\BrushPill\icons"
-$sheet = "C:\Users\james\.cursor\projects\d-cursor-ai-BrushPill\assets\brushbuddy-toolbar-sizes.png"
+$src = "C:\Users\james\.cursor\projects\d-cursor-ai-Brush-Buddies\assets\brushbuddy-toolbar-icon.png"
+$out = "d:\cursor ai\Brush Buddies\icons"
+$sheet = "C:\Users\james\.cursor\projects\d-cursor-ai-Brush-Buddies\assets\brushbuddy-toolbar-sizes.png"
 [ToolbarIcon]::Build($src, $out, $sheet)
 Write-Output "icons written"

@@ -1,7 +1,7 @@
 (function (root) {
   "use strict";
 
-  const DEFAULT_TITLE = "Turn off BrushBuddy?";
+  const DEFAULT_TITLE = "Turn off Brush Buddies?";
   const DEFAULT_MESSAGE =
     "You won't get brush reminders or alerts while it's off.";
 

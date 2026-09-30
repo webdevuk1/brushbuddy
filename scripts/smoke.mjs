@@ -200,7 +200,7 @@ try {
   const ui = options.result?.value;
   const affiliateOn = ui?.products === 6 && ui?.recommendedHidden === false;
   const affiliateOff = ui?.products === 0 && ui?.recommendedHidden === true;
-  if (ui?.title !== "BrushBuddy" || ui.rows !== 3 || (!affiliateOn && !affiliateOff)) {
+  if (ui?.title !== "Brush Buddies" || ui.rows !== 3 || (!affiliateOn && !affiliateOff)) {
     throw new Error("options ui: " + JSON.stringify(ui));
   }
   console.log("smoke passed", pill.result.value.width + "x" + pill.result.value.height, JSON.stringify(ui));

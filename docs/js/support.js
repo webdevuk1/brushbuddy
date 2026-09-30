@@ -4,7 +4,7 @@
   // Your Ko-fi, Stripe Payment Link, or PayPal.me page. Leave empty to hide this section on the live site.
   const SUPPORT_URL = "https://paypal.me/brushbuddys";
 
-  const HEADLINE = "BrushBuddy is a one-person project";
+  const HEADLINE = "Brush Buddies is a one-person project";
   const BLURB =
     "It’s free to use. If it’s helping your routine, optional support goes straight to keeping the app running and improving — only if you want to.";
   const BUTTON_LABEL = "Support the project";

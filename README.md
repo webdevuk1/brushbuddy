@@ -1,13 +1,13 @@
-# BrushBuddy
+# Brush Buddies
 
 A Chrome / Brave reminder to brush your teeth. Your buddy pops up on the site you’re on when a time you chose arrives (if reminders are on).
 
 ## How it works
 
-1. **Toolbar popup** — Click the BrushBuddy icon. Set times, turn sound on, preview, or mark Done / Snooze when he’s waiting.
+1. **Toolbar popup** — Click the Brush Buddies icon. Set times, turn sound on, preview, or mark Done / Snooze when he’s waiting.
 2. **On-page buddy** — On any normal `http` / `https` tab, he appears in the corner with Done, Snooze, and dismiss. Drag to move him.
 3. **No website open** — If notifications are on, Windows / Brave shows a system alert instead.
-4. **Full settings tab** — `brave://extensions` → BrushBuddy → **Details** → **Extension options** (same settings as the popup, bigger layout).
+4. **Full settings tab** — `brave://extensions` → Brush Buddies → **Details** → **Extension options** (same settings as the popup, bigger layout).
 5. **Legal** — Privacy + Terms linked from the popup; host `privacy.html`, `terms.html`, `cookies.html`, and `legal/` publicly for the store (see `docs/LEGAL-COMPLIANCE.md`).
 
 **Sound:** Pick your alert chime in the popup. **Preview buddy** plays it so you can hear it. Real alarms use the same sound. Replace the built-in chime by adding `assets/sounds/alert.mp3` (see that folder’s README).
@@ -41,7 +41,7 @@ Optional **Support** block (settings + website): set `SUPPORT_URL` in `lib/suppo
 ## Store
 
 1. Host the legal pages at a public HTTPS URL (`privacy.html` is required in the listing; also publish `terms.html` and `cookies.html`). Put your support email on the listing. Read `docs/LEGAL-COMPLIANCE.md` for cookies, GDPR, and the Data safety form.
-2. Run `powershell -File scripts/pack-store.ps1`. Upload `dist/BrushBuddy-store.zip`. The pack leaves out the local `key`, so your unpacked extension id stays stable.
+2. Run `powershell -File scripts/pack-store.ps1`. Upload `dist/BrushBuddies-store.zip`. The pack leaves out the local `key`, so your unpacked extension id stays stable.
 3. Permission reason: the buddy is drawn on normal websites when a reminder is due. It does not read those pages.
 4. Screenshots are in `store/` at 1280×800.
 

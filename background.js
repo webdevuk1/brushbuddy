@@ -66,14 +66,14 @@ function rememberState(state) {
 }
 
 chrome.runtime.onInstalled.addListener((details) => {
-  bootstrap().catch((err) => console.error("BrushBuddy install", err));
+  bootstrap().catch((err) => console.error("Brush Buddies install", err));
   if (details.reason === "install") {
     chrome.runtime.openOptionsPage();
   }
 });
 
 chrome.runtime.onStartup.addListener(() => {
-  bootstrap().catch((err) => console.error("BrushBuddy startup", err));
+  bootstrap().catch((err) => console.error("Brush Buddies startup", err));
 });
 
 chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
@@ -83,13 +83,13 @@ chrome.tabs.onUpdated.addListener((tabId, info, tab) => {
     tabId,
     setTimeout(() => {
       tabWakeTimers.delete(tabId);
-      wakeTab(tabId).catch((err) => console.error("BrushBuddy tab", err));
+      wakeTab(tabId).catch((err) => console.error("Brush Buddies tab", err));
     }, 120)
   );
 });
 
 chrome.alarms.onAlarm.addListener((alarm) => {
-  onAlarm(alarm).catch((err) => console.error("BrushBuddy alarm", err));
+  onAlarm(alarm).catch((err) => console.error("Brush Buddies alarm", err));
 });
 
 const TRUSTED_SITE_PREFIXES = [
@@ -131,7 +131,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   onMessage(message, sender)
     .then(sendResponse)
     .catch((err) => {
-      console.error("BrushBuddy message", err);
+      console.error("Brush Buddies message", err);
       sendResponse({ ok: false, error: String(err && err.message ? err.message : err) });
     });
   return true;
@@ -139,7 +139,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
 chrome.notifications.onButtonClicked.addListener((notifId, buttonIndex) => {
   const action = buttonIndex === 0 ? "done" : "snooze";
-  onPillAction(action, notifId).catch((err) => console.error("BrushBuddy notification", err));
+  onPillAction(action, notifId).catch((err) => console.error("Brush Buddies notification", err));
 });
 
 chrome.notifications.onClicked.addListener((notifId) => {
@@ -148,7 +148,7 @@ chrome.notifications.onClicked.addListener((notifId) => {
       if (!state.pending || state.pending.id !== notifId) return null;
       return deliver(state.pending);
     })
-    .catch((err) => console.error("BrushBuddy notification click", err));
+    .catch((err) => console.error("Brush Buddies notification click", err));
 });
 
 function isWebTab(tab) {
@@ -452,7 +452,7 @@ async function hideEverywhere() {
       try {
         await chrome.tabs.sendMessage(tab.id, { type: "HIDE_PILL" });
       } catch (_err) {
-        /* This tab has no BrushBuddy content script. */
+        /* This tab has no Brush Buddies content script. */
       }
     })
   );
@@ -466,7 +466,7 @@ async function notify(pending, sound, state) {
     await chrome.notifications.create(pending.id, {
       type: "basic",
       iconUrl: chrome.runtime.getURL("icons/icon128.png"),
-      title: "BrushBuddy",
+      title: "Brush Buddies",
       message: label,
       buttons: [{ title: "Done" }, { title: snoozeButtonLabel(state) }],
       silent: !sound,
@@ -474,7 +474,7 @@ async function notify(pending, sound, state) {
     });
     return true;
   } catch (err) {
-    console.error("BrushBuddy notify", err);
+    console.error("Brush Buddies notify", err);
     return false;
   }
 }

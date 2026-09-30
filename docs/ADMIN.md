@@ -1,10 +1,10 @@
-# BrushBuddy admin (go-live checklist)
+# Brush Buddies admin (go-live checklist)
 
 Private checklist at **`/admin/go-live`** (or `/admin/go-live.html`) on your Vercel site (not linked from the public homepage).
 
 ## Login (same pattern as Matty’s BBQ)
 
-1. Vercel → your BrushBuddy project → **Settings** → **Environment Variables**
+1. Vercel → your Brush Buddies project → **Settings** → **Environment Variables**
 2. Add for **Production**:
    - `ADMIN_USERNAME` — your chosen username
    - `ADMIN_PASSWORD` — a strong password
@@ -24,7 +24,7 @@ Users can open **Report a bug** on the website and extension. Reports POST to `/
 2. Vercel → **Environment Variables** (Production):
    - `RESEND_API_KEY` — your Resend API key
    - `BUG_REPORT_TO_EMAIL` — optional; defaults to `info@jameshoy.dev`
-   - `RESEND_FROM` — optional; defaults to `BrushBuddy <info@jameshoy.dev>` (domain must be verified in Resend)
+   - `RESEND_FROM` — optional; defaults to `Brush Buddies <info@jameshoy.dev>` (domain must be verified in Resend)
 3. **Redeploy** after saving.
 
 Replies use the reporter’s email as `Reply-To`.

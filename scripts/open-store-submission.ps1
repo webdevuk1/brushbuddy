@@ -1,6 +1,6 @@
 $root = Split-Path $PSScriptRoot -Parent
 & (Join-Path $root "scripts\pack-store.ps1") | Out-Null
-$zip = Join-Path $root "dist\BrushBuddy-store.zip"
+$zip = Join-Path $root "dist\BrushBuddies-store.zip"
 $store = Join-Path $root "store"
 $paste = Join-Path $root "docs\LISTING-PASTE.txt"
 explorer.exe "/select,$zip"
