@@ -37,8 +37,10 @@
   });
 
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState !== "visible") stopAlarm();
-    else scheduleMaybeShow();
+    if (document.visibilityState !== "visible") {
+      host?.remove();
+      host = null;
+    } else scheduleMaybeShow();
   });
   window.addEventListener("pageshow", () => scheduleMaybeShow());
   window.addEventListener("resize", () => {
@@ -73,7 +75,7 @@
   function renderBuddy(pending, opts) {
     if (!pending || typeof pending.id !== "string") return false;
     if (host && currentId === pending.id) {
-      if (opts.chime && globalThis.BrushAlertSound) BrushAlertSound.startLoop(opts.soundId || "classic");
+      if (opts.chime) requestReminderSound(opts.soundId);
       return true;
     }
     currentId = pending.id;
@@ -82,9 +84,7 @@
     host = buildBuddy(pending, opts);
     document.documentElement.appendChild(host);
     requestAnimationFrame(() => applyPosition(currentPos));
-    if (opts.chime && globalThis.BrushAlertSound && document.visibilityState === "visible") {
-      BrushAlertSound.startLoop(opts.soundId || "classic");
-    }
+    if (opts.chime) requestReminderSound(opts.soundId);
     return true;
   }
 
@@ -93,8 +93,14 @@
     return Boolean(soundPref);
   }
 
+  function requestReminderSound(soundId) {
+    chrome.runtime
+      .sendMessage({ type: "REMINDER_SOUND_START", soundId: soundId || "classic" })
+      .catch(() => {});
+  }
+
   function stopAlarm() {
-    if (globalThis.BrushAlertSound) BrushAlertSound.stop();
+    chrome.runtime.sendMessage({ type: "REMINDER_SOUND_STOP" }).catch(() => {});
   }
 
   function hideBuddy() {

@@ -1,4 +1,4 @@
-importScripts("lib/time.js", "lib/storage.js");
+importScripts("lib/time.js", "lib/storage.js", "lib/offscreen-audio.js");
 
 const ALARM_PREFIX = "brush:";
 const SNOOZE_PREFIX = "snooze:";
@@ -120,7 +120,15 @@ function isTrustedWebsiteSender(sender) {
 
 function mayHandleMessage(sender, type) {
   if (!isOurExtension(sender)) return false;
-  if (type === "GET_PENDING" || type === "PILL_ACTION" || type === "SAVE_POSITION") return true;
+  if (
+    type === "GET_PENDING" ||
+    type === "PILL_ACTION" ||
+    type === "SAVE_POSITION" ||
+    type === "REMINDER_SOUND_START" ||
+    type === "REMINDER_SOUND_STOP"
+  ) {
+    return true;
+  }
   if (type === "GET_STATE" || type === "SAVE" || type === "PREVIEW") {
     return isExtensionUiSender(sender) || isTrustedWebsiteSender(sender);
   }
@@ -232,7 +240,16 @@ async function pingTab(tabId, message) {
 
 async function onMessage(message, sender) {
   if (!message || typeof message.type !== "string") return { ok: false };
+  if (message.type === "OFFSCREEN_ALARM") return { ok: true };
   if (!mayHandleMessage(sender, message.type)) return { ok: false, error: "forbidden" };
+  if (message.type === "REMINDER_SOUND_START") {
+    await brushStartAlarmSound(message.soundId || "classic");
+    return { ok: true };
+  }
+  if (message.type === "REMINDER_SOUND_STOP") {
+    await brushStopAlarmSound();
+    return { ok: true };
+  }
   if (message.type === "GET_STATE") {
     return getPublicState();
   }
@@ -398,10 +415,21 @@ async function deliver(pending) {
   const results = await Promise.all(
     pages.map((tab) => trySend(tab, message))
   );
-  if (results.some((result) => result.shown)) return { shown: true, notified: false, waiting: false };
-  if (results.some((result) => result.connected)) return { shown: false, notified: false, waiting: true };
+  const playSound = Boolean(state.prefs.sound) && !(pending && pending.preview);
+  if (results.some((result) => result.shown)) {
+    if (playSound) await brushStartAlarmSound(state.prefs.soundId || "classic");
+    else await brushStopAlarmSound();
+    return { shown: true, notified: false, waiting: false };
+  }
+  if (results.some((result) => result.connected)) {
+    if (playSound) await brushStartAlarmSound(state.prefs.soundId || "classic");
+    else await brushStopAlarmSound();
+    return { shown: false, notified: false, waiting: true };
+  }
   let notified = false;
   if (state.prefs.notifications) notified = await notify(pending, state.prefs.sound, state);
+  if (playSound) await brushStartAlarmSound(state.prefs.soundId || "classic");
+  else await brushStopAlarmSound();
   return { shown: false, notified: notified, waiting: false };
 }
 
@@ -409,7 +437,7 @@ async function ensureScripts(tabId) {
   if (scriptedTabs.has(tabId)) return;
   await chrome.scripting.executeScript({
     target: { tabId: tabId },
-    files: ["lib/characters.js", "lib/sound-tones.js", "lib/alert-sound.js", "content/buddy.js"],
+    files: ["lib/characters.js", "content/buddy.js"],
   });
   scriptedTabs.add(tabId);
 }
@@ -445,6 +473,7 @@ async function injectOpenTabs() {
 }
 
 async function hideEverywhere() {
+  await brushStopAlarmSound();
   const tabs = (await chrome.tabs.query({})).filter(isWebTab);
   await Promise.all(
     tabs.map(async (tab) => {
