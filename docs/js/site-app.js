@@ -13,9 +13,9 @@
   const PRODUCT_LIST = [
     { name: "Water flosser", detail: "Cleans between teeth without string.", query: "water flosser" },
     { name: "Electric toothbrush", detail: "Runs a two-minute timer for you.", query: "electric toothbrush" },
-    { name: "Toothpaste", detail: "The one dentists keep recommending.", query: "toothpaste" },
-    { name: "Dental floss", detail: "The minute after you brush.", query: "dental floss" },
-    { name: "Mouthwash", detail: "Rinse after brushing for extra freshness.", query: "mouthwash" },
+    { name: "Toothpaste", detail: "Look for 1,350–1,500ppm fluoride.", query: "toothpaste" },
+    { name: "Dental floss", detail: "Floss before you brush.", query: "dental floss" },
+    { name: "Mouthwash", detail: "Use at a different time to brushing.", query: "mouthwash" },
     { name: "Toothbrush heads", detail: "Swap every few months — electric brushes need these.", query: "electric toothbrush replacement heads" },
   ];
 
