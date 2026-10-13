@@ -911,3 +911,9 @@ h2 {
     grid-column: 1 / -1;
   }
 }
+
+/* Directory badges */
+.hero .featured{flex-basis:100%;width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.75rem 0 0;font-size:.8rem;opacity:.85}
+.featured img,.footer-badges img{display:block;max-width:100%;height:auto}
+.footer-badges{flex-basis:100%;display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem;opacity:.9}
+.hero{flex-wrap:wrap}
