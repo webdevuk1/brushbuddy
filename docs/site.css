@@ -917,3 +917,5 @@ h2 {
 .featured img,.footer-badges img{display:block;max-width:100%;height:auto}
 .footer-badges{flex-basis:100%;display:flex;flex-wrap:wrap;gap:.75rem;margin-top:.5rem;opacity:.9}
 .hero{flex-wrap:wrap}
+.footer{flex-wrap:wrap}
+.footer span:first-child{flex-wrap:wrap}
